@@ -266,6 +266,11 @@ a {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.account-card--wide {
+  width: min(100%, 920px);
+  margin-top: 1rem;
+}
+
 .auth-copy {
   color: var(--text-muted);
   margin: 1rem 0 0;
@@ -574,6 +579,19 @@ a {
 
 .summary-button {
   width: 100%;
+}
+
+.orders-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.order-card {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 @media (max-width: 640px) {

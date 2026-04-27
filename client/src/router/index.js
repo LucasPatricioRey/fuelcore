@@ -3,7 +3,9 @@ import { useAuthStore } from '../stores/auth'
 import HomeView from '../views/HomeView.vue'
 import AccountView from '../views/AccountView.vue'
 import CartView from '../views/CartView.vue'
+import CheckoutCanceledView from '../views/CheckoutCanceledView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
+import CheckoutSuccessView from '../views/CheckoutSuccessView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProductDetailView from '../views/ProductDetailView.vue'
 import RegisterView from '../views/RegisterView.vue'
@@ -34,6 +36,22 @@ const routes = [
     path: '/checkout',
     name: 'checkout',
     component: CheckoutView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/checkout/exito',
+    name: 'checkout-success',
+    component: CheckoutSuccessView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/checkout/cancelado',
+    name: 'checkout-canceled',
+    component: CheckoutCanceledView,
     meta: {
       requiresAuth: true,
     },

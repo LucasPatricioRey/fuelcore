@@ -1,13 +1,18 @@
 <script setup>
-import { reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
+import { createCheckoutSession } from '../services/paymentService'
 import { formatPrice } from '../utils/formatters'
 
+const router = useRouter()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 const { items, subtotal } = storeToRefs(cartStore)
+const isSubmitting = ref(false)
+const error = ref('')
 
 const form = reactive({
   fullName: authStore.user ? `${authStore.user.firstName} ${authStore.user.lastName}` : '',
@@ -16,6 +21,47 @@ const form = reactive({
   postalCode: '',
   country: 'Argentina',
 })
+
+const canSubmit = computed(
+  () =>
+    items.value.length &&
+    form.fullName &&
+    form.addressLine1 &&
+    form.city &&
+    form.postalCode &&
+    form.country,
+)
+
+const handleCheckout = async () => {
+  if (!authStore.token) {
+    router.push('/login')
+    return
+  }
+
+  isSubmitting.value = true
+  error.value = ''
+
+  try {
+    const { checkoutUrl } = await createCheckoutSession({
+      token: authStore.token,
+      items: items.value.map((item) => ({
+        productId: item._id,
+        quantity: item.quantity,
+      })),
+      shippingAddress: {
+        ...form,
+      },
+    })
+
+    window.location.href = checkoutUrl
+  } catch (checkoutError) {
+    error.value =
+      checkoutError.message ??
+      'No se pudo iniciar el checkout. Revisa las claves de Stripe del backend.'
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <template>
@@ -29,7 +75,7 @@ const form = reactive({
           al backend para crear la orden y delegar el pago a Stripe.
         </p>
 
-        <form class="auth-form">
+        <form class="auth-form" @submit.prevent="handleCheckout">
           <label class="form-field">
             <span>Nombre completo</span>
             <input v-model="form.fullName" type="text" placeholder="Nombre y apellido" />
@@ -57,8 +103,14 @@ const form = reactive({
             <input v-model="form.country" type="text" />
           </label>
 
-          <button class="primary-button" type="button" disabled>
-            Checkout de Stripe en la siguiente etapa
+          <p v-if="error" class="form-message form-message--error">{{ error }}</p>
+
+          <button class="primary-button" type="submit" :disabled="!canSubmit || isSubmitting">
+            {{
+              isSubmitting
+                ? 'Redirigiendo a Stripe...'
+                : 'Pagar con Stripe Checkout'
+            }}
           </button>
         </form>
       </div>
