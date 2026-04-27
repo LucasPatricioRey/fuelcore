@@ -23,7 +23,7 @@ const categories = [
       </p>
 
       <div class="hero-actions">
-        <a class="primary-link" href="#categorias">Explorar lineas</a>
+        <router-link class="primary-link" to="/tienda">Explorar lineas</router-link>
         <a class="secondary-link" href="#alcance">Ver alcance inicial</a>
       </div>
     </section>
@@ -47,6 +47,15 @@ const categories = [
           <p>{{ category.description }}</p>
         </article>
       </div>
+    </section>
+
+    <section class="preview-cta">
+      <div class="preview-cta__content">
+        <p class="eyebrow">Siguiente avance</p>
+        <h2>El catalogo ya empieza a verse como una tienda.</h2>
+      </div>
+
+      <router-link class="primary-link" to="/tienda">Ir a la tienda</router-link>
     </section>
   </main>
 </template>
