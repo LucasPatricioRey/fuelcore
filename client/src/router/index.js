@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import AccountView from '../views/AccountView.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutCanceledView from '../views/CheckoutCanceledView.vue'
+import CheckoutPendingView from '../views/CheckoutPendingView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
 import CheckoutSuccessView from '../views/CheckoutSuccessView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -52,6 +53,14 @@ const routes = [
     path: '/checkout/cancelado',
     name: 'checkout-canceled',
     component: CheckoutCanceledView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/checkout/pendiente',
+    name: 'checkout-pending',
+    component: CheckoutPendingView,
     meta: {
       requiresAuth: true,
     },
