@@ -1,6 +1,7 @@
 import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
+import { env } from './config/env.js'
 import { notFoundHandler } from './middlewares/notFoundHandler.js'
 
 export const createApp = () => {
@@ -8,7 +9,7 @@ export const createApp = () => {
 
   app.use(
     cors({
-      origin: process.env.CLIENT_URL ?? 'http://localhost:5173',
+      origin: env.clientUrl,
       credentials: true,
     }),
   )
