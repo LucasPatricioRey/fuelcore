@@ -15,6 +15,10 @@ const persistCart = (items) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
 }
 
+export const clearStoredCart = () => {
+  localStorage.removeItem(STORAGE_KEY)
+}
+
 export const useCartStore = defineStore('cart', {
   state: () => ({
     items: readStoredCart(),

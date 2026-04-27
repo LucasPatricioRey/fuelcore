@@ -45,25 +45,16 @@ const routes = [
     path: '/checkout/exito',
     name: 'checkout-success',
     component: CheckoutSuccessView,
-    meta: {
-      requiresAuth: true,
-    },
   },
   {
     path: '/checkout/cancelado',
     name: 'checkout-canceled',
     component: CheckoutCanceledView,
-    meta: {
-      requiresAuth: true,
-    },
   },
   {
     path: '/checkout/pendiente',
     name: 'checkout-pending',
     component: CheckoutPendingView,
-    meta: {
-      requiresAuth: true,
-    },
   },
   {
     path: '/login',

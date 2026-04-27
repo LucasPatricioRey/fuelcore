@@ -1,10 +1,11 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useCartStore } from '../stores/cart'
+import { clearStoredCart, useCartStore } from '../stores/cart'
 
 const cartStore = useCartStore()
 
 onMounted(() => {
+  clearStoredCart()
   cartStore.clearCart()
 })
 </script>
