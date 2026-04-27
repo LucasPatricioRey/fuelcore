@@ -12,4 +12,5 @@ export const env = {
   port: Number(process.env.PORT ?? 4000),
   stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? '',
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? '',
+  stripeCurrency: process.env.STRIPE_CURRENCY ?? 'ars',
 }

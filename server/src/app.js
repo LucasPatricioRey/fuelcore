@@ -2,10 +2,14 @@ import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
 import { env } from './config/env.js'
+import { handleStripeWebhook } from './controllers/paymentController.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { notFoundHandler } from './middlewares/notFoundHandler.js'
 import { authRouter } from './routes/authRoutes.js'
+import { orderRouter } from './routes/orderRoutes.js'
+import { paymentRouter } from './routes/paymentRoutes.js'
 import { productRouter } from './routes/productRoutes.js'
+import { asyncHandler } from './utils/asyncHandler.js'
 
 export const createApp = () => {
   const app = express()
@@ -16,6 +20,7 @@ export const createApp = () => {
       credentials: true,
     }),
   )
+  app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), asyncHandler(handleStripeWebhook))
   app.use(express.json())
   app.use(morgan('dev'))
 
@@ -29,6 +34,8 @@ export const createApp = () => {
 
   app.use('/api/auth', authRouter)
   app.use('/api/products', productRouter)
+  app.use('/api/orders', orderRouter)
+  app.use('/api/payments', paymentRouter)
   app.use(notFoundHandler)
   app.use(errorHandler)
 
