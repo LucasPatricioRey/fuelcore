@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
 import { useProductsStore } from '../stores/products'
 import { formatPrice } from '../utils/formatters'
+import { getProductImage, getProductTheme, handleProductImageError } from '../utils/productVisuals'
 
 const route = useRoute()
 const router = useRouter()
@@ -16,6 +17,7 @@ const error = ref('')
 const isLoading = ref(true)
 
 const canIncrease = computed(() => product.value && quantity.value < product.value.stock)
+const theme = computed(() => getProductTheme(product.value?.category))
 
 onMounted(async () => {
   try {
@@ -43,12 +45,20 @@ const addToCart = () => {
     <p v-else-if="error" class="state-message">{{ error }}</p>
 
     <section v-else-if="product" class="product-detail">
-      <div class="product-detail__media">
-        <img :src="product.image" :alt="product.name" />
+      <div
+        class="product-detail__media"
+        :style="{ '--product-accent': theme.accent, '--product-glow': theme.shadow }"
+      >
+        <img
+          :src="getProductImage(product)"
+          :alt="product.name"
+          @error="handleProductImageError($event, product)"
+        />
+        <div class="product-detail__glow"></div>
       </div>
 
       <div class="product-detail__content">
-        <p class="eyebrow">{{ product.category }}</p>
+        <p class="eyebrow">{{ theme.eyebrow }} / {{ product.category }}</p>
         <h1>{{ product.name }}</h1>
         <p class="hero-copy">{{ product.description }}</p>
 
@@ -65,7 +75,7 @@ const addToCart = () => {
           <strong>{{ formatPrice(product.price) }}</strong>
         </div>
 
-        <div class="detail-actions">
+        <div class="detail-actions detail-actions--panel">
           <div class="quantity-selector">
             <button class="ghost-button" type="button" @click="quantity = Math.max(1, quantity - 1)">
               -
