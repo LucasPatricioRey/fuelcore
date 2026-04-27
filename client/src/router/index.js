@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import HomeView from '../views/HomeView.vue'
 import AccountView from '../views/AccountView.vue'
+import AdminDashboardView from '../views/AdminDashboardView.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutCanceledView from '../views/CheckoutCanceledView.vue'
 import CheckoutPendingView from '../views/CheckoutPendingView.vue'
@@ -80,6 +81,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminDashboardView,
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true,
+    },
+  },
 ]
 
 export const router = createRouter({
@@ -96,6 +106,10 @@ router.beforeEach(async (to) => {
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     return '/login'
+  }
+
+  if (to.meta.requiresAdmin && !authStore.isAdmin) {
+    return '/mi-cuenta'
   }
 
   if (to.meta.guestOnly && authStore.isAuthenticated) {

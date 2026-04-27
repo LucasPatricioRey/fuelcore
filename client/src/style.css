@@ -308,6 +308,16 @@ a {
   font: inherit;
 }
 
+.form-field select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  padding: 0.95rem 1rem;
+  font: inherit;
+}
+
 .form-field input::placeholder {
   color: #9c9488;
 }
@@ -592,6 +602,37 @@ a {
   border-radius: 1rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-metrics {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-bottom: 1.5rem;
+}
+
+.admin-panel {
+  min-height: 220px;
+}
+
+.admin-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.admin-orders {
+  margin-top: 1.5rem;
+}
+
+.admin-orders__table {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.order-card--admin {
+  display: grid;
+  gap: 0.85rem;
 }
 
 @media (max-width: 640px) {
