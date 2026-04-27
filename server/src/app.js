@@ -2,7 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
 import { env } from './config/env.js'
-import { handleStripeWebhook } from './controllers/paymentController.js'
+import { handleMercadoPagoWebhook } from './controllers/paymentController.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { notFoundHandler } from './middlewares/notFoundHandler.js'
 import { authRouter } from './routes/authRoutes.js'
@@ -20,7 +20,7 @@ export const createApp = () => {
       credentials: true,
     }),
   )
-  app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), asyncHandler(handleStripeWebhook))
+  app.post('/api/payments/webhook', express.json(), asyncHandler(handleMercadoPagoWebhook))
   app.use(express.json())
   app.use(morgan('dev'))
 

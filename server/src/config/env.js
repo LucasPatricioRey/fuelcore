@@ -10,7 +10,7 @@ export const env = {
     process.env.MONGODB_URI ??
     'mongodb://127.0.0.1:27017/fuelcore',
   port: Number(process.env.PORT ?? 4000),
-  stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? '',
-  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? '',
-  stripeCurrency: process.env.STRIPE_CURRENCY ?? 'ars',
+  mercadoPagoAccessToken: process.env.MP_ACCESS_TOKEN ?? '',
+  mercadoPagoWebhookSecret: process.env.MP_WEBHOOK_SECRET ?? '',
+  mercadoPagoCurrency: process.env.MP_CURRENCY ?? 'ARS',
 }

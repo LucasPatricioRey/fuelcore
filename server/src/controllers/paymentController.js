@@ -2,11 +2,15 @@ import { Order } from '../models/Order.js'
 import { Product } from '../models/Product.js'
 import { env } from '../config/env.js'
 import { buildOrderFromItems } from '../services/orderService.js'
-import { getStripeClient } from '../services/stripeService.js'
+import {
+  createMercadoPagoPreference,
+  getMercadoPagoPayment,
+} from '../services/mercadoPagoService.js'
 import { AppError } from '../utils/appError.js'
 
-const buildSuccessUrl = () => `${env.clientUrl}/checkout/exito?session_id={CHECKOUT_SESSION_ID}`
+const buildSuccessUrl = () => `${env.clientUrl}/checkout/exito`
 const buildCancelUrl = () => `${env.clientUrl}/checkout/cancelado`
+const buildPendingUrl = () => `${env.clientUrl}/checkout/pendiente`
 
 export const createCheckoutSession = async (request, response) => {
   const { items, shippingAddress } = request.body
@@ -33,99 +37,108 @@ export const createCheckoutSession = async (request, response) => {
     shippingAddress,
   })
 
-  const stripe = getStripeClient()
-
-  const session = await stripe.checkout.sessions.create({
-    mode: 'payment',
-    success_url: buildSuccessUrl(),
-    cancel_url: buildCancelUrl(),
-    client_reference_id: order._id.toString(),
-    customer_email: request.user.email,
+  const preference = await createMercadoPagoPreference({
+    items: orderDraft.items.map((item) => ({
+      id: item.product.toString(),
+      title: item.nameSnapshot,
+      quantity: item.quantity,
+      currency_id: env.mercadoPagoCurrency,
+      unit_price: item.priceSnapshot,
+    })),
+    back_urls: {
+      success: buildSuccessUrl(),
+      failure: buildCancelUrl(),
+      pending: buildPendingUrl(),
+    },
+    auto_return: 'approved',
+    external_reference: order._id.toString(),
+    payer: {
+      email: request.user.email,
+      name: request.user.firstName,
+      surname: request.user.lastName,
+    },
+    notification_url: 'https://fuelcore.onrender.com/api/payments/webhook',
     metadata: {
       orderId: order._id.toString(),
       userId: request.user._id.toString(),
     },
-    line_items: orderDraft.items.map((item) => ({
-      quantity: item.quantity,
-      price_data: {
-        currency: env.stripeCurrency,
-        unit_amount: item.priceSnapshot,
-        product_data: {
-          name: item.nameSnapshot,
-        },
+    shipments: {
+      receiver_address: {
+        zip_code: shippingAddress.postalCode,
+        street_name: shippingAddress.addressLine1,
+        city_name: shippingAddress.city,
       },
-    })),
+    },
   })
 
-  order.stripeCheckoutSessionId = session.id
+  order.mercadoPagoPreferenceId = preference.id
   await order.save()
 
   response.status(200).json({
-    checkoutUrl: session.url,
+    checkoutUrl: preference.init_point,
     orderId: order._id,
   })
 }
 
-export const handleStripeWebhook = async (request, response) => {
-  const stripe = getStripeClient()
-  const signature = request.headers['stripe-signature']
-
-  if (!signature || !env.stripeWebhookSecret) {
-    throw new AppError('Falta configurar la firma del webhook de Stripe.', 400)
-  }
-
-  let event
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      request.body,
-      signature,
-      env.stripeWebhookSecret,
-    )
-  } catch (error) {
-    response.status(400).send(`Webhook Error: ${error.message}`)
+const markOrderAsPaid = async (order, paymentId) => {
+  if (order.paymentStatus === 'paid') {
     return
   }
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object
-    const orderId = session.metadata?.orderId
+  order.paymentStatus = 'paid'
+  order.status = 'pagado'
+  order.mercadoPagoPaymentId = String(paymentId)
+  await order.save()
 
-    if (orderId) {
-      const order = await Order.findById(orderId)
+  for (const item of order.items) {
+    await Product.findByIdAndUpdate(item.product, {
+      $inc: {
+        stock: -item.quantity,
+      },
+    })
+  }
+}
 
-      if (order && order.paymentStatus !== 'paid') {
-        order.paymentStatus = 'paid'
-        order.status = 'pagado'
-        order.stripeCheckoutSessionId = session.id ?? ''
-        order.stripePaymentIntentId = session.payment_intent?.toString() ?? ''
-        await order.save()
+export const handleMercadoPagoWebhook = async (request, response) => {
+  const paymentId = request.query['data.id'] ?? request.body?.data?.id
+  const type = request.query.type ?? request.body?.type
 
-        for (const item of order.items) {
-          await Product.findByIdAndUpdate(item.product, {
-            $inc: {
-              stock: -item.quantity,
-            },
-          })
-        }
-      }
-    }
+  if (type !== 'payment' || !paymentId) {
+    response.status(200).json({ received: true })
+    return
   }
 
-  if (event.type === 'checkout.session.async_payment_failed') {
-    const session = event.data.object
-    const orderId = session.metadata?.orderId
+  const payment = await getMercadoPagoPayment(paymentId)
+  const orderId = payment.external_reference
 
-    if (orderId) {
-      const order = await Order.findById(orderId)
-
-      if (order) {
-        order.paymentStatus = 'failed'
-        order.status = 'cancelado'
-        await order.save()
-      }
-    }
+  if (!orderId) {
+    response.status(200).json({ received: true })
+    return
   }
 
-  response.json({ received: true })
+  const order = await Order.findById(orderId)
+
+  if (!order) {
+    response.status(200).json({ received: true })
+    return
+  }
+
+  if (payment.status === 'approved') {
+    await markOrderAsPaid(order, payment.id)
+  }
+
+  if (payment.status === 'rejected' || payment.status === 'cancelled') {
+    order.paymentStatus = 'failed'
+    order.status = 'cancelado'
+    order.mercadoPagoPaymentId = String(payment.id)
+    await order.save()
+  }
+
+  if (payment.status === 'pending' || payment.status === 'in_process') {
+    order.paymentStatus = 'pending'
+    order.mercadoPagoPaymentId = String(payment.id)
+    await order.save()
+  }
+
+  response.status(200).json({ received: true })
 }

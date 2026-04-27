@@ -59,12 +59,12 @@ const orderSchema = new mongoose.Schema(
       enum: ['pending', 'paid', 'failed', 'refunded'],
       default: 'pending',
     },
-    stripeCheckoutSessionId: {
+    mercadoPagoPreferenceId: {
       type: String,
       default: '',
       trim: true,
     },
-    stripePaymentIntentId: {
+    mercadoPagoPaymentId: {
       type: String,
       default: '',
       trim: true,
