@@ -34,6 +34,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    comparePrice: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
     brand: {
       type: String,
       default: 'FuelCore',
@@ -49,6 +54,10 @@ const productSchema = new mongoose.Schema(
       default: '',
       trim: true,
     },
+    images: {
+      type: [String],
+      default: [],
+    },
     featured: {
       type: Boolean,
       default: false,
@@ -56,6 +65,11 @@ const productSchema = new mongoose.Schema(
     active: {
       type: Boolean,
       default: true,
+    },
+    flavor: {
+      type: String,
+      default: '',
+      trim: true,
     },
   },
   {

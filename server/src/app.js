@@ -5,6 +5,7 @@ import { env } from './config/env.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { notFoundHandler } from './middlewares/notFoundHandler.js'
 import { authRouter } from './routes/authRoutes.js'
+import { productRouter } from './routes/productRoutes.js'
 
 export const createApp = () => {
   const app = express()
@@ -27,6 +28,7 @@ export const createApp = () => {
   })
 
   app.use('/api/auth', authRouter)
+  app.use('/api/products', productRouter)
   app.use(notFoundHandler)
   app.use(errorHandler)
 
