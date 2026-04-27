@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getProducts } from '../services/productService'
+import { getProductBySlug, getProducts } from '../services/productService'
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -22,6 +22,9 @@ export const useProductsStore = defineStore('products', {
       } finally {
         this.isLoading = false
       }
+    },
+    async fetchProductBySlug(slug) {
+      return getProductBySlug(slug)
     },
   },
 })

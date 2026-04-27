@@ -2,10 +2,13 @@
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useCartStore } from '../stores/cart'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 const { isAuthenticated, userFullName } = storeToRefs(authStore)
+const { totalItems } = storeToRefs(cartStore)
 
 const handleLogout = () => {
   authStore.logout()
@@ -21,6 +24,7 @@ const handleLogout = () => {
       <nav class="site-nav">
         <router-link to="/">Inicio</router-link>
         <router-link to="/tienda">Tienda</router-link>
+        <router-link to="/carrito">Carrito ({{ totalItems }})</router-link>
         <router-link v-if="isAuthenticated" to="/mi-cuenta">Mi cuenta</router-link>
         <router-link v-else to="/login">Ingresar</router-link>
       </nav>

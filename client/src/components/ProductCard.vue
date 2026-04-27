@@ -1,17 +1,21 @@
 <script setup>
-defineProps({
+import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cart'
+import { formatPrice } from '../utils/formatters'
+
+const router = useRouter()
+const cartStore = useCartStore()
+
+const props = defineProps({
   product: {
     type: Object,
     required: true,
   },
 })
 
-const formatPrice = (price) =>
-  new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    maximumFractionDigits: 0,
-  }).format(price)
+const handleAddToCart = () => {
+  cartStore.addItem(props.product)
+}
 </script>
 
 <template>
@@ -22,7 +26,7 @@ const formatPrice = (price) =>
     </div>
 
     <div class="product-card__body">
-      <p class="product-card__meta">{{ product.category }} · {{ product.goal }}</p>
+      <p class="product-card__meta">{{ product.category }} / {{ product.goal }}</p>
       <h3>{{ product.name }}</h3>
       <p class="product-card__description">{{ product.description }}</p>
 
@@ -35,6 +39,13 @@ const formatPrice = (price) =>
         </div>
 
         <span class="product-card__stock">{{ product.stock }} disponibles</span>
+      </div>
+
+      <div class="product-card__actions">
+        <button class="ghost-button" type="button" @click="router.push(`/productos/${product.slug}`)">
+          Ver detalle
+        </button>
+        <button class="primary-button" type="button" @click="handleAddToCart">Agregar</button>
       </div>
     </div>
   </article>

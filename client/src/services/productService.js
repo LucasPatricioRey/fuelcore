@@ -16,3 +16,24 @@ export const getProducts = async () => {
     return mockProducts
   }
 }
+
+export const getProductBySlug = async (slug) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/products/${slug}`)
+
+    if (!response.ok) {
+      throw new Error('No se pudo cargar el producto.')
+    }
+
+    const data = await response.json()
+    return data.product
+  } catch (error) {
+    const fallbackProduct = mockProducts.find((product) => product.slug === slug)
+
+    if (!fallbackProduct) {
+      throw error
+    }
+
+    return fallbackProduct
+  }
+}
