@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
@@ -9,6 +9,12 @@ const authStore = useAuthStore()
 const form = reactive({
   email: '',
   password: '',
+})
+
+watchEffect(() => {
+  if (authStore.isAuthenticated) {
+    router.replace('/mi-cuenta')
+  }
 })
 
 const handleSubmit = async () => {
