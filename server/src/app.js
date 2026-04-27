@@ -3,6 +3,7 @@ import express from 'express'
 import morgan from 'morgan'
 import { env } from './config/env.js'
 import { handleMercadoPagoWebhook } from './controllers/paymentController.js'
+import { dashboardRouter } from './routes/dashboardRoutes.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { notFoundHandler } from './middlewares/notFoundHandler.js'
 import { authRouter } from './routes/authRoutes.js'
@@ -33,6 +34,7 @@ export const createApp = () => {
   })
 
   app.use('/api/auth', authRouter)
+  app.use('/api/dashboard', dashboardRouter)
   app.use('/api/products', productRouter)
   app.use('/api/orders', orderRouter)
   app.use('/api/payments', paymentRouter)
