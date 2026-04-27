@@ -10,7 +10,7 @@ Base inicial de un e-commerce de suplementos y fitness orientado a portfolio.
 - Node.js + Express
 - MongoDB + Mongoose
 - JWT
-- Stripe
+- Mercado Pago
 
 ## Estructura
 
@@ -26,7 +26,7 @@ server/  API REST en Express
 3. Base del frontend y backend
 4. Autenticacion y roles
 5. Catalogo, carrito y checkout
-6. Pagos con Stripe
+6. Pagos con Mercado Pago
 7. Panel admin y dashboard
 8. Pulido final y deploy
 
@@ -54,6 +54,6 @@ Variables requeridas en Render:
 - `CLIENT_URL`
 - `MONGO_URI`
 - `JWT_SECRET`
-- `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
-- `STRIPE_CURRENCY`
+- `MP_ACCESS_TOKEN`
+- `MP_WEBHOOK_SECRET`
+- `MP_CURRENCY`

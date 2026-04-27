@@ -57,7 +57,7 @@ const handleCheckout = async () => {
   } catch (checkoutError) {
     error.value =
       checkoutError.message ??
-      'No se pudo iniciar el checkout. Revisa las claves de Stripe del backend.'
+      'No se pudo iniciar el checkout. Revisa la configuracion de Mercado Pago en el backend.'
   } finally {
     isSubmitting.value = false
   }
@@ -72,7 +72,7 @@ const handleCheckout = async () => {
         <h1>Base lista para integrar pagos.</h1>
         <p class="auth-copy">
           Todavia no estamos cobrando. Esta pantalla prepara los datos que despues vamos a mandar
-          al backend para crear la orden y delegar el pago a Stripe.
+          al backend para crear la orden y delegar el pago a Mercado Pago.
         </p>
 
         <form class="auth-form" @submit.prevent="handleCheckout">
@@ -108,8 +108,8 @@ const handleCheckout = async () => {
           <button class="primary-button" type="submit" :disabled="!canSubmit || isSubmitting">
             {{
               isSubmitting
-                ? 'Redirigiendo a Stripe...'
-                : 'Pagar con Stripe Checkout'
+                ? 'Redirigiendo a Mercado Pago...'
+                : 'Pagar con Mercado Pago'
             }}
           </button>
         </form>

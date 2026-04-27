@@ -13,10 +13,10 @@ onMounted(() => {
   <main class="page-shell auth-page">
     <section class="auth-card">
       <p class="eyebrow">Pago recibido</p>
-      <h1>Stripe te devolvio al sitio correctamente.</h1>
+      <h1>Mercado Pago te devolvio al sitio correctamente.</h1>
       <p class="auth-copy">
-        El paso importante no es esta pantalla, sino el webhook del backend. Stripe envia el evento
-        a tu servidor para marcar la orden como pagada y descontar stock.
+        El paso importante no es esta pantalla, sino la notificacion del backend. Mercado Pago
+        envia el evento a tu servidor para marcar la orden como pagada y descontar stock.
       </p>
 
       <router-link class="primary-link" to="/mi-cuenta">Ver mi cuenta</router-link>
