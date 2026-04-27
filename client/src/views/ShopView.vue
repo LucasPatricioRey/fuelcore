@@ -24,20 +24,42 @@ const filteredProducts = computed(() => {
 
   return productsStore.items.filter((product) => product.category === selectedCategory.value)
 })
+
+const featuredCount = computed(() => productsStore.items.filter((product) => product.featured).length)
 </script>
 
 <template>
   <main class="page-shell">
-    <section class="shop-hero">
-      <p class="eyebrow">Catalogo inicial</p>
-      <h1>Suplementos y packs listos para una tienda real.</h1>
-      <p class="hero-copy">
-        Esta vista ya consume la capa de productos y usa datos de respaldo si la API todavia no
-        esta levantada.
-      </p>
+    <section class="shop-hero shop-hero--premium">
+      <div>
+        <p class="eyebrow">Catalogo FuelCore</p>
+        <h1>Suplementos listos para verse como una tienda que vende de verdad.</h1>
+        <p class="hero-copy">
+          Vista comercial con filtros rapidos, cards mas trabajadas y una presentacion mucho mas
+          alineada a una marca de performance premium.
+        </p>
+      </div>
+
+      <div class="shop-hero__stats">
+        <article class="shop-stat">
+          <strong>{{ productsStore.items.length || 4 }}</strong>
+          <span>productos activos</span>
+        </article>
+        <article class="shop-stat">
+          <strong>{{ featuredCount || 3 }}</strong>
+          <span>destacados en portada</span>
+        </article>
+      </div>
     </section>
 
-    <section class="shop-toolbar">
+    <section class="shop-toolbar shop-toolbar--panel">
+      <div class="section-heading section-heading--inline">
+        <div>
+          <p class="eyebrow">Filtrar rapido</p>
+          <h2>Elegi por categoria</h2>
+        </div>
+      </div>
+
       <div class="filter-list">
         <button
           v-for="category in categories"

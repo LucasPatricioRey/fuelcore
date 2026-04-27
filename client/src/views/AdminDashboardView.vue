@@ -34,9 +34,10 @@ const handleStatusChange = async (orderId, event) => {
   <main class="page-shell">
     <section class="account-hero">
       <p class="eyebrow">Admin</p>
-      <h1>Panel inicial con datos reales del negocio.</h1>
+      <h1>Centro operativo con metricas, ordenes y stock en un solo lugar.</h1>
       <p class="hero-copy">
-        Esta primera version del dashboard ya consume ordenes, productos y clientes desde la API.
+        Dashboard inicial enfocado en lectura rapida, control de estados y señales utiles para una
+        marca que quiere verse comercial de verdad.
       </p>
     </section>
 

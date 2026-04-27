@@ -29,12 +29,14 @@ const handleSubmit = async () => {
 
 <template>
   <main class="page-shell auth-page">
-    <section class="auth-card">
-      <p class="eyebrow">Acceso</p>
-      <h1>Entrar a tu cuenta.</h1>
-      <p class="auth-copy">
-        Esta etapa conecta el frontend con JWT real usando la API que ya quedo montada en MongoDB.
-      </p>
+    <section class="auth-card auth-card--feature">
+      <div class="auth-card__copy">
+        <p class="eyebrow">Acceso</p>
+        <h1>Entrar para seguir tu compra o revisar tus ordenes.</h1>
+        <p class="auth-copy">
+          Inicia sesion para continuar el checkout, revisar pagos y entrar a tu panel personal.
+        </p>
+      </div>
 
       <form class="auth-form" @submit.prevent="handleSubmit">
         <label class="form-field">

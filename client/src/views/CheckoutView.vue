@@ -69,10 +69,10 @@ const handleCheckout = async () => {
     <section class="cart-layout">
       <div class="auth-card">
         <p class="eyebrow">Checkout</p>
-        <h1>Base lista para integrar pagos.</h1>
+        <h1>Cerrar la compra con entrega y pago reales.</h1>
         <p class="auth-copy">
-          Todavia no estamos cobrando. Esta pantalla prepara los datos que despues vamos a mandar
-          al backend para crear la orden y delegar el pago a Mercado Pago.
+          Completa los datos de envio y te redirigimos al checkout de Mercado Pago. Desde aca ya
+          se crea la orden real en backend antes de pasar al pago.
         </p>
 
         <form class="auth-form" @submit.prevent="handleCheckout">
@@ -117,6 +117,7 @@ const handleCheckout = async () => {
 
       <aside class="summary-card">
         <p class="eyebrow">Orden</p>
+        <h2 class="summary-card__title">Resumen de compra</h2>
         <div v-for="item in items" :key="item.slug" class="summary-row">
           <span>{{ item.name }} x{{ item.quantity }}</span>
           <strong>{{ formatPrice(item.price * item.quantity) }}</strong>

@@ -32,12 +32,15 @@ const handleSubmit = async () => {
 
 <template>
   <main class="page-shell auth-page">
-    <section class="auth-card">
-      <p class="eyebrow">Registro</p>
-      <h1>Crear una cuenta nueva.</h1>
-      <p class="auth-copy">
-        El registro ya pega contra la API real y devuelve un token listo para mantener la sesion.
-      </p>
+    <section class="auth-card auth-card--feature">
+      <div class="auth-card__copy">
+        <p class="eyebrow">Registro</p>
+        <h1>Crear una cuenta nueva para comprar y seguir tus pedidos.</h1>
+        <p class="auth-copy">
+          El registro ya impacta sobre la API real, genera el token y deja la sesion lista para
+          continuar comprando.
+        </p>
+      </div>
 
       <form class="auth-form" @submit.prevent="handleSubmit">
         <div class="form-grid">

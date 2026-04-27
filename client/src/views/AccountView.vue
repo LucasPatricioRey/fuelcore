@@ -21,10 +21,10 @@ onMounted(() => {
   <main class="page-shell account-page">
     <section class="account-hero">
       <p class="eyebrow">Mi cuenta</p>
-      <h1>Sesion autenticada sobre la API real.</h1>
+      <h1>Tu perfil y tus compras, todo en un solo panel.</h1>
       <p class="hero-copy">
-        Esta pantalla confirma que el token se guardo, el backend valido la sesion y el frontend
-        pudo recuperar tu perfil.
+        Consulta tu historial, verifica estados de pago y usa esta vista como centro de seguimiento
+        de la cuenta.
       </p>
     </section>
 
@@ -49,6 +49,7 @@ onMounted(() => {
 
     <section class="account-card account-card--wide">
       <p class="eyebrow">Mis ordenes</p>
+      <h2 class="summary-card__title">Historial reciente</h2>
       <p v-if="isLoading" class="state-message">Cargando ordenes...</p>
       <p v-else-if="error" class="state-message">{{ error }}</p>
       <p v-else-if="!orders.length" class="state-message">

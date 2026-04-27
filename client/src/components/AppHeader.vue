@@ -19,7 +19,13 @@ const handleLogout = () => {
 <template>
   <header class="site-header">
     <div class="site-header__inner">
-      <router-link class="brand-mark" to="/">FuelCore</router-link>
+      <router-link class="brand-mark" to="/">
+        <span class="brand-mark__badge">FC</span>
+        <span>
+          FuelCore
+          <small>Performance Supply</small>
+        </span>
+      </router-link>
 
       <nav class="site-nav">
         <router-link to="/">Inicio</router-link>

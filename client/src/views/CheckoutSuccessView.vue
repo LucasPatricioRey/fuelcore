@@ -12,12 +12,12 @@ onMounted(() => {
 
 <template>
   <main class="page-shell auth-page">
-    <section class="auth-card">
+    <section class="auth-card auth-card--feature">
       <p class="eyebrow">Pago recibido</p>
-      <h1>Mercado Pago te devolvio al sitio correctamente.</h1>
+      <h1>Compra confirmada y vuelta correcta al sitio.</h1>
       <p class="auth-copy">
-        El paso importante no es esta pantalla, sino la notificacion del backend. Mercado Pago
-        envia el evento a tu servidor para marcar la orden como pagada y descontar stock.
+        Tu orden ya puede verse en la cuenta. El webhook termina de consolidar el pago, actualizar
+        el estado y descontar stock del producto correspondiente.
       </p>
 
       <router-link class="primary-link" to="/mi-cuenta">Ver mi cuenta</router-link>
