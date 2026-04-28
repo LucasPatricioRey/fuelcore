@@ -889,14 +889,12 @@ img {
 }
 
 .home-section-heading h2 {
-  width: 100%;
-  max-width: 100%;
+  width: auto;
+  max-width: none;
   margin: 0 auto;
-  font-size: clamp(1.7rem, 2.45vw, 2.9rem);
+  font-size: clamp(1.55rem, 2vw, 2.35rem);
   line-height: 1.02;
-  white-space: normal;
-  text-wrap: balance;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 .home-categories__grid,
@@ -2470,7 +2468,11 @@ img {
   }
 
   .home-section-heading h2 {
+    width: 100%;
+    max-width: 100%;
     white-space: normal;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
   }
 
   .catalog-header__sort {
