@@ -64,9 +64,9 @@ const handleLogout = () => {
 
         <div class="utility-strip__account">
           <router-link :to="accountRoute">{{ accountLabel }}</router-link>
-          <router-link v-if="!isAuthenticated" to="/registro">Crear cuenta</router-link>
+          <router-link v-if="!isAuthenticated" to="/registro">O podés registrarte</router-link>
           <span v-else class="session-pill">{{ userFullName }}</span>
-          <router-link v-if="isAdmin" to="/admin">Admin FuelCore</router-link>
+          <router-link v-if="isAdmin" to="/admin">Admin</router-link>
         </div>
       </div>
     </div>
@@ -74,29 +74,33 @@ const handleLogout = () => {
     <div class="header-main">
       <div class="header-main__inner">
         <router-link class="brand-mark brand-mark--commerce" to="/">
-          <span class="brand-mark__badge">FC</span>
-          <span>
-            FuelCore
-            <small>Suplementacion y performance</small>
-          </span>
+          <span class="brand-mark__word">FuelCore</span>
         </router-link>
 
         <div class="header-search">
           <router-link class="header-search__field" to="/tienda">
-            Busca proteinas, creatina, packs o accesorios
+            ¿Qué estás buscando?
           </router-link>
-          <router-link class="header-search__action" to="/tienda">Buscar</router-link>
+          <router-link class="header-search__action" to="/tienda">⌕</router-link>
         </div>
 
         <div class="header-main__actions">
+          <router-link class="header-account" :to="accountRoute">
+            <span class="header-account__icon">◯</span>
+            <span class="header-account__copy">
+              <strong>{{ isAuthenticated ? 'Mi cuenta' : '¡Hola! Iniciá sesión' }}</strong>
+              <small>{{ isAuthenticated ? userFullName : 'O podés registrarte' }}</small>
+            </span>
+          </router-link>
+
           <router-link class="header-icon-link" to="/carrito">
-            <span>Carrito</span>
+            <span class="header-icon-link__label">🛒</span>
             <strong>{{ totalItems }}</strong>
           </router-link>
 
           <router-link v-if="isAdmin" class="header-icon-link" to="/admin">Admin</router-link>
 
-          <button v-if="isAuthenticated" class="ghost-button header-logout" type="button" @click="handleLogout">
+          <button v-if="isAuthenticated && !isCompact" class="ghost-button header-logout" type="button" @click="handleLogout">
             Salir
           </button>
         </div>
@@ -105,12 +109,13 @@ const handleLogout = () => {
 
     <nav class="catalog-nav">
       <div class="catalog-nav__inner">
+        <router-link class="catalog-nav__categories" to="/tienda">☰ Categorías</router-link>
         <router-link to="/">Inicio</router-link>
-        <router-link to="/tienda">Todo el catalogo</router-link>
+        <router-link to="/tienda">Marcas</router-link>
         <router-link v-for="link in featuredLinks" :key="link.label" :to="link.to">
           {{ link.label }}
         </router-link>
-        <router-link to="/mi-cuenta">Seguimiento</router-link>
+        <router-link to="/tienda">Accesorios</router-link>
       </div>
     </nav>
   </header>

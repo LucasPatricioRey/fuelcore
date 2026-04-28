@@ -66,10 +66,10 @@ const installmentText = computed(() => {
       </div>
 
       <div class="product-card__actions">
-        <button class="ghost-button" type="button" @click="router.push(`/productos/${product.slug}`)">
-          Ver producto
+        <button class="primary-button product-card__buy" type="button" @click="handleAddToCart">Comprar</button>
+        <button class="ghost-button product-card__detail" type="button" @click="router.push(`/productos/${product.slug}`)">
+          Ver
         </button>
-        <button class="primary-button" type="button" @click="handleAddToCart">Agregar al carrito</button>
       </div>
     </div>
   </article>

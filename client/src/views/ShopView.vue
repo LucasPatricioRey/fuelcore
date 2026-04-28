@@ -93,19 +93,19 @@ const resetFilters = () => {
       <aside class="catalog-sidebar">
         <div class="catalog-filter-box">
           <label class="form-field">
-            <span>Buscar</span>
-            <input v-model="filters.search" type="text" placeholder="Whey, creatina, pre..." />
-          </label>
-        </div>
-
-        <div class="catalog-filter-box">
-          <label class="form-field">
-            <span>Categoria</span>
+            <span>Categorías</span>
             <select v-model="filters.category">
               <option v-for="category in categoryOptions" :key="category" :value="category">
                 {{ category }}
               </option>
             </select>
+          </label>
+        </div>
+
+        <div class="catalog-filter-box">
+          <label class="form-field">
+            <span>Marca / búsqueda</span>
+            <input v-model="filters.search" type="text" placeholder="Whey, creatina, pre..." />
           </label>
         </div>
 
@@ -136,7 +136,7 @@ const resetFilters = () => {
       <div class="catalog-results">
         <div class="results-bar results-bar--catalog">
           <strong>{{ productsStore.items.length }}</strong>
-          <span>productos disponibles para compra online</span>
+          <span>productos encontrados</span>
         </div>
 
         <p v-if="productsStore.isLoading" class="state-message">Cargando productos...</p>
