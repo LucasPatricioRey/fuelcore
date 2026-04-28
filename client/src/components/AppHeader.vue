@@ -31,10 +31,22 @@ const accountRoute = computed(() => (isAuthenticated.value ? '/mi-cuenta' : '/lo
 const accountSubtitle = computed(() =>
   isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
 )
-const showCompactNav = ref(false)
+
+const isCompact = ref(false)
+const compactEnterOffset = 220
+const compactExitOffset = 140
 
 const handleScroll = () => {
-  showCompactNav.value = window.scrollY > 160
+  const currentScroll = window.scrollY
+
+  if (!isCompact.value && currentScroll > compactEnterOffset) {
+    isCompact.value = true
+    return
+  }
+
+  if (isCompact.value && currentScroll < compactExitOffset) {
+    isCompact.value = false
+  }
 }
 
 onMounted(() => {
@@ -57,7 +69,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <header class="site-header site-header--commerce">
+  <header class="site-header site-header--commerce" :class="{ 'site-header--compact': isCompact }">
     <div class="site-header__top">
       <div class="promo-bar">
         <div class="promo-bar__inner">
@@ -133,16 +145,4 @@ const handleLogout = () => {
       </div>
     </nav>
   </header>
-
-  <div class="compact-nav" :class="{ 'compact-nav--visible': showCompactNav }">
-    <div class="compact-nav__inner">
-      <router-link class="compact-nav__brand" to="/">FuelCore</router-link>
-      <router-link class="compact-nav__link compact-nav__link--primary" to="/tienda">
-        Categorias
-      </router-link>
-      <router-link v-for="link in navigationLinks" :key="`compact-${link.label}`" class="compact-nav__link" :to="link.to">
-        {{ link.label }}
-      </router-link>
-    </div>
-  </div>
 </template>
