@@ -51,83 +51,85 @@ const featuredProducts = computed(() => {
 </script>
 
 <template>
-  <main class="page-shell page-shell--home">
+  <main class="page-shell--home">
     <section class="home-banner">
       <router-link class="home-banner__frame" to="/tienda">
         <img :src="bannerFuelCore" alt="FuelCore banner principal" />
       </router-link>
     </section>
 
-    <section class="home-promo-strip">
-      <article class="home-promo-strip__card">
-        <strong>Envios a todo el pais</strong>
-        <span>Recibi tus suplementos con una experiencia de compra simple y segura.</span>
-      </article>
-      <article class="home-promo-strip__card">
-        <strong>Mercado Pago protegido</strong>
-        <span>Paga con checkout real y seguimiento desde tu cuenta.</span>
-      </article>
-      <article class="home-promo-strip__card">
-        <strong>Combos y rendimiento</strong>
-        <span>Arma tu stack con creatina, proteinas y pre entrenos en una sola tienda.</span>
-      </article>
-    </section>
-
-    <section class="home-strip">
-      <div class="home-strip__inner">
-        <span v-for="brand in brands" :key="brand">{{ brand }}</span>
-      </div>
-    </section>
-
-    <section class="home-categories">
-      <div class="section-heading home-section-heading">
-        <div>
-          <p class="eyebrow">Categorias principales</p>
-          <h2>Explora la tienda por linea de producto.</h2>
-        </div>
-        <router-link class="secondary-link" to="/tienda">Ver todo el catalogo</router-link>
-      </div>
-
-      <div class="home-categories__grid">
-        <article v-for="category in categoryCards" :key="category.name" class="home-category-card">
-          <span class="home-category-card__count">{{ category.count }}</span>
-          <h3>{{ category.name }}</h3>
-          <p>{{ category.copy }}</p>
-          <router-link class="home-category-card__link" to="/tienda">Comprar ahora</router-link>
+    <div class="home-content-shell">
+      <section class="home-promo-strip">
+        <article class="home-promo-strip__card">
+          <strong>Envios a todo el pais</strong>
+          <span>Recibi tus suplementos con una experiencia de compra simple y segura.</span>
         </article>
-      </div>
-    </section>
-
-    <section class="home-featured">
-      <div class="section-heading home-section-heading">
-        <div>
-          <p class="eyebrow">Productos destacados</p>
-          <h2>Selecciones fuertes para fuerza, energia y recuperacion.</h2>
-        </div>
-      </div>
-
-      <div class="home-featured__toolbar">
-        <span>Ofertas, top ventas y productos con salida rapida.</span>
-        <router-link class="primary-link" to="/tienda">Ir a la tienda</router-link>
-      </div>
-
-      <p v-if="productsStore.isLoading" class="state-message">Cargando productos destacados...</p>
-      <p v-else-if="productsStore.error" class="state-message">{{ productsStore.error }}</p>
-
-      <section v-else class="product-grid product-grid--home">
-        <ProductCard
-          v-for="product in featuredProducts"
-          :key="product._id ?? product.slug"
-          :product="product"
-        />
+        <article class="home-promo-strip__card">
+          <strong>Mercado Pago protegido</strong>
+          <span>Paga con checkout real y seguimiento desde tu cuenta.</span>
+        </article>
+        <article class="home-promo-strip__card">
+          <strong>Combos y rendimiento</strong>
+          <span>Arma tu stack con creatina, proteinas y pre entrenos en una sola tienda.</span>
+        </article>
       </section>
-    </section>
 
-    <section class="home-trust">
-      <article v-for="pillar in trustPillars" :key="pillar" class="home-trust__card">
-        <h3>{{ pillar }}</h3>
-        <p>Una experiencia de compra que mantiene cuenta, carrito, checkout y operacion real.</p>
-      </article>
-    </section>
+      <section class="home-strip">
+        <div class="home-strip__inner">
+          <span v-for="brand in brands" :key="brand">{{ brand }}</span>
+        </div>
+      </section>
+
+      <section class="home-categories">
+        <div class="section-heading home-section-heading">
+          <div>
+            <p class="eyebrow">Categorias principales</p>
+            <h2>Explora la tienda por linea de producto.</h2>
+          </div>
+          <router-link class="secondary-link" to="/tienda">Ver todo el catalogo</router-link>
+        </div>
+
+        <div class="home-categories__grid">
+          <article v-for="category in categoryCards" :key="category.name" class="home-category-card">
+            <span class="home-category-card__count">{{ category.count }}</span>
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.copy }}</p>
+            <router-link class="home-category-card__link" to="/tienda">Comprar ahora</router-link>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-featured">
+        <div class="section-heading home-section-heading">
+          <div>
+            <p class="eyebrow">Productos destacados</p>
+            <h2>Selecciones fuertes para fuerza, energia y recuperacion.</h2>
+          </div>
+        </div>
+
+        <div class="home-featured__toolbar">
+          <span>Ofertas, top ventas y productos con salida rapida.</span>
+          <router-link class="primary-link" to="/tienda">Ir a la tienda</router-link>
+        </div>
+
+        <p v-if="productsStore.isLoading" class="state-message">Cargando productos destacados...</p>
+        <p v-else-if="productsStore.error" class="state-message">{{ productsStore.error }}</p>
+
+        <section v-else class="product-grid product-grid--home">
+          <ProductCard
+            v-for="product in featuredProducts"
+            :key="product._id ?? product.slug"
+            :product="product"
+          />
+        </section>
+      </section>
+
+      <section class="home-trust">
+        <article v-for="pillar in trustPillars" :key="pillar" class="home-trust__card">
+          <h3>{{ pillar }}</h3>
+          <p>Una experiencia de compra que mantiene cuenta, carrito, checkout y operacion real.</p>
+        </article>
+      </section>
+    </div>
   </main>
 </template>

@@ -641,7 +641,6 @@ img {
   margin-top: 4rem;
 }
 
-.page-shell--home,
 .storefront-hero__main,
 .storefront-hero__aside,
 .shop-banner__copy,
@@ -657,21 +656,30 @@ img {
   box-shadow: var(--shadow);
 }
 
-.page-shell--home {
-  display: grid;
-  gap: 1.15rem;
-}
-
 .home-banner {
   display: grid;
+}
+
+.page-shell--home {
+  width: 100%;
+  padding: 0 0 5rem;
+}
+
+.home-content-shell {
+  width: min(calc(100% - 2rem), var(--page-width));
+  margin: 0 auto;
+  padding-top: 1.15rem;
+  display: grid;
+  gap: 1.15rem;
 }
 
 .home-banner__frame {
   display: block;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0d0d0f;
-  box-shadow: var(--shadow);
+  width: 100%;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .home-banner__frame img {
@@ -2380,7 +2388,8 @@ img {
   .utility-strip__inner,
   .header-main__inner,
   .catalog-nav__inner,
-  .page-shell {
+  .page-shell,
+  .home-content-shell {
     width: min(calc(100% - 1.2rem), var(--page-width));
   }
 
