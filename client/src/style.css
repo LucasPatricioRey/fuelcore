@@ -148,6 +148,23 @@ img {
   transform: translateY(-1px);
 }
 
+.site-nav__cart {
+  gap: 0.55rem;
+}
+
+.site-nav__cart strong {
+  min-width: 1.65rem;
+  height: 1.65rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 124, 49, 0.16);
+  color: var(--accent-soft);
+  font-size: 0.78rem;
+}
+
 .site-header__actions {
   display: inline-flex;
   align-items: center;
@@ -260,11 +277,18 @@ img {
   margin-top: 2rem;
 }
 
+.hero-actions > * {
+  min-width: 190px;
+}
+
 .primary-link,
 .secondary-link,
 .primary-button,
 .ghost-button,
 .filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   padding: 0.92rem 1.3rem;
   transition:
@@ -820,6 +844,11 @@ img {
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
+  margin-top: auto;
+}
+
+.cart-item__remove {
+  min-width: 110px;
 }
 
 .summary-card {
@@ -850,6 +879,13 @@ img {
   text-align: center;
 }
 
+.summary-card .primary-link,
+.summary-card .primary-button,
+.auth-card .primary-link,
+.auth-card .primary-button {
+  width: 100%;
+}
+
 .auth-page,
 .account-page {
   display: grid;
@@ -858,6 +894,8 @@ img {
 
 .auth-card {
   width: min(100%, 720px);
+  display: grid;
+  gap: 1.15rem;
 }
 
 .auth-card--feature {
@@ -877,9 +915,13 @@ img {
 }
 
 .auth-form {
-  margin-top: 1.5rem;
   display: grid;
   gap: 1rem;
+}
+
+.auth-submit,
+.auth-link {
+  width: 100%;
 }
 
 .form-grid {
@@ -927,7 +969,7 @@ img {
 }
 
 .auth-switch {
-  margin: 1rem 0 0;
+  margin: 0;
   color: var(--text-muted);
 }
 

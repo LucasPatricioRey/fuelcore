@@ -57,7 +57,7 @@ const handleCheckout = async () => {
   } catch (checkoutError) {
     error.value =
       checkoutError.message ??
-      'No se pudo iniciar el checkout. Revisa la configuracion de Mercado Pago en el backend.'
+      'No pudimos iniciar el pago. Intenta nuevamente en unos segundos.'
   } finally {
     isSubmitting.value = false
   }
@@ -67,12 +67,12 @@ const handleCheckout = async () => {
 <template>
   <main class="page-shell">
     <section class="cart-layout">
-      <div class="auth-card">
+      <div class="auth-card auth-card--feature">
         <p class="eyebrow">Checkout</p>
-        <h1>Cerrar la compra con entrega y pago reales.</h1>
+        <h1>Confirma tus datos y continua al pago seguro.</h1>
         <p class="auth-copy">
-          Completa los datos de envio y te redirigimos al checkout de Mercado Pago. Desde aca ya
-          se crea la orden real en backend antes de pasar al pago.
+          Completa la direccion de entrega y te redirigimos a Mercado Pago para finalizar la
+          compra.
         </p>
 
         <form class="auth-form" @submit.prevent="handleCheckout">
@@ -105,12 +105,8 @@ const handleCheckout = async () => {
 
           <p v-if="error" class="form-message form-message--error">{{ error }}</p>
 
-          <button class="primary-button" type="submit" :disabled="!canSubmit || isSubmitting">
-            {{
-              isSubmitting
-                ? 'Redirigiendo a Mercado Pago...'
-                : 'Pagar con Mercado Pago'
-            }}
+          <button class="primary-button auth-submit" type="submit" :disabled="!canSubmit || isSubmitting">
+            {{ isSubmitting ? 'Redirigiendo a Mercado Pago...' : 'Continuar con Mercado Pago' }}
           </button>
         </form>
       </div>

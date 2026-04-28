@@ -35,10 +35,10 @@ const handleSubmit = async () => {
     <section class="auth-card auth-card--feature">
       <div class="auth-card__copy">
         <p class="eyebrow">Registro</p>
-        <h1>Crear una cuenta nueva para comprar y seguir tus pedidos.</h1>
+        <h1>Crea tu cuenta para comprar y seguir tus pedidos.</h1>
         <p class="auth-copy">
-          El registro ya impacta sobre la API real, genera el token y deja la sesion lista para
-          continuar comprando.
+          Registra tus datos para guardar compras, consultar estados y continuar el checkout desde
+          cualquier momento.
         </p>
       </div>
 
@@ -80,13 +80,13 @@ const handleSubmit = async () => {
           {{ authStore.error }}
         </p>
 
-        <button class="primary-button" type="submit" :disabled="authStore.isLoading">
-          {{ authStore.isLoading ? 'Creando cuenta...' : 'Crear cuenta' }}
+        <button class="primary-button auth-submit" type="submit" :disabled="authStore.isLoading">
+          {{ authStore.isLoading ? 'Creando cuenta...' : 'Crear mi cuenta' }}
         </button>
       </form>
 
       <p class="auth-switch">
-        ¿Ya tenes cuenta?
+        Ya tenes cuenta?
         <router-link to="/login">Ingresar</router-link>
       </p>
     </section>

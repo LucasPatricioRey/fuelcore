@@ -30,7 +30,10 @@ const handleLogout = () => {
       <nav class="site-nav">
         <router-link to="/">Inicio</router-link>
         <router-link to="/tienda">Tienda</router-link>
-        <router-link to="/carrito">Carrito ({{ totalItems }})</router-link>
+        <router-link class="site-nav__cart" to="/carrito">
+          <span>Carrito</span>
+          <strong>{{ totalItems }}</strong>
+        </router-link>
         <router-link v-if="isAdmin" to="/admin">Admin</router-link>
         <router-link v-if="isAuthenticated" to="/mi-cuenta">Mi cuenta</router-link>
         <router-link v-else to="/login">Ingresar</router-link>

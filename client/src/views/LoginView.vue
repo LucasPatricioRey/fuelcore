@@ -32,9 +32,10 @@ const handleSubmit = async () => {
     <section class="auth-card auth-card--feature">
       <div class="auth-card__copy">
         <p class="eyebrow">Acceso</p>
-        <h1>Entrar para seguir tu compra o revisar tus ordenes.</h1>
+        <h1>Entra a tu cuenta para seguir tus compras.</h1>
         <p class="auth-copy">
-          Inicia sesion para continuar el checkout, revisar pagos y entrar a tu panel personal.
+          Accede a tu historial de pedidos, revisa estados de pago y continua el checkout cuando lo
+          necesites.
         </p>
       </div>
 
@@ -53,13 +54,13 @@ const handleSubmit = async () => {
           {{ authStore.error }}
         </p>
 
-        <button class="primary-button" type="submit" :disabled="authStore.isLoading">
-          {{ authStore.isLoading ? 'Ingresando...' : 'Iniciar sesion' }}
+        <button class="primary-button auth-submit" type="submit" :disabled="authStore.isLoading">
+          {{ authStore.isLoading ? 'Ingresando...' : 'Entrar a mi cuenta' }}
         </button>
       </form>
 
       <p class="auth-switch">
-        ¿Todavia no tenes cuenta?
+        Todavia no tenes cuenta?
         <router-link to="/registro">Crear cuenta</router-link>
       </p>
     </section>

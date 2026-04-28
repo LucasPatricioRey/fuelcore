@@ -1,8 +1,20 @@
 <script setup>
 const metrics = [
-  { value: '+120', label: 'ordenes simuladas', note: 'flujo real con pagos y stock' },
-  { value: '24 hs', label: 'enfoque comercial', note: 'brand, carrito y admin alineados' },
-  { value: 'Full stack', label: 'base conectada', note: 'Vue, Express, Mongo y Mercado Pago' },
+  {
+    value: '4 lineas',
+    label: 'catalogo principal',
+    note: 'proteinas, creatina, pre entrenos y packs',
+  },
+  {
+    value: 'Pagos online',
+    label: 'checkout integrado',
+    note: 'Mercado Pago conectado con ordenes y stock',
+  },
+  {
+    value: 'Panel admin',
+    label: 'control operativo',
+    note: 'ventas, ordenes y productos con bajo stock',
+  },
 ]
 
 const categories = [
@@ -24,9 +36,9 @@ const categories = [
 ]
 
 const pillars = [
-  'Checkout real con Mercado Pago y ordenes persistidas.',
-  'Cuenta de cliente con historial de compras y estados.',
-  'Panel admin con facturacion, stock bajo y ordenes recientes.',
+  'Compra online con Mercado Pago y ordenes registradas en tiempo real.',
+  'Cuenta de cliente con seguimiento de compras y estados de pago.',
+  'Panel administrativo con ventas, stock bajo y ordenes recientes.',
 ]
 </script>
 
@@ -37,13 +49,14 @@ const pillars = [
         <p class="eyebrow">FuelCore Performance Supply</p>
         <h1>Marca premium para gente que entrena con objetivo.</h1>
         <p class="hero-copy">
-          Suplementacion, combos y accesorios presentados como un e-commerce serio: visual fuerte,
-          checkout real y una operacion que ya se siente comercial.
+          Suplementos, combos y accesorios presentados como una tienda de nutricion deportiva
+          moderna, con compra real, seguimiento de ordenes y una identidad visual enfocada en
+          rendimiento.
         </p>
 
         <div class="hero-actions">
-          <router-link class="primary-link" to="/tienda">Comprar linea principal</router-link>
-          <router-link class="secondary-link" to="/admin">Ver dashboard</router-link>
+          <router-link class="primary-link" to="/tienda">Explorar productos</router-link>
+          <a class="secondary-link" href="#categorias">Ver categorias</a>
         </div>
 
         <div class="hero-metrics">
@@ -58,10 +71,10 @@ const pillars = [
       <aside class="hero-spotlight">
         <div class="hero-spotlight__panel">
           <p class="eyebrow">Lanzamiento de temporada</p>
-          <h2>Stack de fuerza, energia y recuperacion.</h2>
+          <h2>Fuerza, energia y recuperacion en una sola seleccion.</h2>
           <p>
-            Una direccion visual mas agresiva, mas marca y menos demo generica. El objetivo es que
-            la tienda se vea como algo que podria salir a vender mañana.
+            Productos pensados para cubrir toda la rutina: pre entrenamiento, potencia,
+            recuperacion y combinaciones listas para una compra mas simple.
           </p>
         </div>
 
@@ -85,18 +98,21 @@ const pillars = [
     <section class="section-block section-block--split">
       <div class="section-heading section-heading--narrow">
         <p class="eyebrow">Direccion de marca</p>
-        <h2>Una tienda pensada para portfolio, pero con tension comercial real.</h2>
+        <h2>Una experiencia pensada para inspirar confianza desde la primera visita.</h2>
       </div>
 
       <div class="info-grid info-grid--editorial">
         <article v-for="pillar in pillars" :key="pillar" class="info-card">
           <h3>{{ pillar }}</h3>
-          <p>Base funcional lista para crecer sin rehacer auth, pagos ni panel operativo.</p>
+          <p>
+            Una estructura preparada para sostener crecimiento sin perder claridad visual ni orden
+            operativo.
+          </p>
         </article>
       </div>
     </section>
 
-    <section class="categories categories--showcase">
+    <section id="categorias" class="categories categories--showcase">
       <div class="section-heading">
         <p class="eyebrow">Categorias destacadas</p>
         <h2>Lineas creadas para cubrir fuerza, rendimiento y recuperacion.</h2>
@@ -114,8 +130,8 @@ const pillars = [
 
     <section class="preview-cta preview-cta--wide">
       <div class="preview-cta__content">
-        <p class="eyebrow">Siguiente paso visual</p>
-        <h2>Recorre la tienda y mirala ya como una marca, no como un scaffold.</h2>
+        <p class="eyebrow">Explora la tienda</p>
+        <h2>Descubri las lineas principales y empeza tu pedido desde el catalogo.</h2>
       </div>
 
       <router-link class="primary-link" to="/tienda">Ir al catalogo completo</router-link>

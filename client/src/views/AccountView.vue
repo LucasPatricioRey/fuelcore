@@ -21,10 +21,10 @@ onMounted(() => {
   <main class="page-shell account-page">
     <section class="account-hero">
       <p class="eyebrow">Mi cuenta</p>
-      <h1>Tu perfil y tus compras, todo en un solo panel.</h1>
+      <h1>Tu perfil y tus compras, reunidos en un solo lugar.</h1>
       <p class="hero-copy">
-        Consulta tu historial, verifica estados de pago y usa esta vista como centro de seguimiento
-        de la cuenta.
+        Consulta tus datos, sigue el estado de tus pedidos y revisa el historial de compra cuando
+        lo necesites.
       </p>
     </section>
 
@@ -43,17 +43,17 @@ onMounted(() => {
       </div>
       <div class="account-row">
         <span>Telefono</span>
-        <strong>{{ user.phone || 'Sin cargar' }}</strong>
+        <strong>{{ user.phone || 'No informado' }}</strong>
       </div>
     </section>
 
     <section class="account-card account-card--wide">
       <p class="eyebrow">Mis ordenes</p>
-      <h2 class="summary-card__title">Historial reciente</h2>
+      <h2 class="summary-card__title">Historial de compras</h2>
       <p v-if="isLoading" class="state-message">Cargando ordenes...</p>
       <p v-else-if="error" class="state-message">{{ error }}</p>
       <p v-else-if="!orders.length" class="state-message">
-        Todavia no hay compras registradas en esta cuenta.
+        Aun no registras compras en esta cuenta.
       </p>
 
       <div v-else class="orders-list">

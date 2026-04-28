@@ -1,14 +1,14 @@
 <template>
   <main class="page-shell auth-page">
-    <section class="auth-card">
+    <section class="auth-card auth-card--feature">
       <p class="eyebrow">Pago pendiente</p>
-      <h1>Mercado Pago dejo la compra en revision o pendiente.</h1>
+      <h1>Estamos esperando la confirmacion del pago.</h1>
       <p class="auth-copy">
-        Esto no significa que este mal. La orden puede tardar un poco en actualizarse segun el
-        medio de pago. Revisala desde tu cuenta.
+        Segun el medio de pago elegido, la acreditacion puede tardar unos minutos. Podes revisar
+        el estado actualizado desde tu cuenta.
       </p>
 
-      <router-link class="primary-link" to="/mi-cuenta">Ver mis ordenes</router-link>
+      <router-link class="primary-link auth-link" to="/mi-cuenta">Ver mis ordenes</router-link>
     </section>
   </main>
 </template>

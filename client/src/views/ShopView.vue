@@ -33,10 +33,10 @@ const featuredCount = computed(() => productsStore.items.filter((product) => pro
     <section class="shop-hero shop-hero--premium">
       <div>
         <p class="eyebrow">Catalogo FuelCore</p>
-        <h1>Suplementos listos para verse como una tienda que vende de verdad.</h1>
+        <h1>Suplementos seleccionados para rendimiento, fuerza y recuperacion.</h1>
         <p class="hero-copy">
-          Vista comercial con filtros rapidos, cards mas trabajadas y una presentacion mucho mas
-          alineada a una marca de performance premium.
+          Recorre una seleccion orientada a entrenamiento, constancia y progreso diario, con una
+          presentacion clara y foco comercial.
         </p>
       </div>
 
@@ -47,7 +47,7 @@ const featuredCount = computed(() => productsStore.items.filter((product) => pro
         </article>
         <article class="shop-stat">
           <strong>{{ featuredCount || 3 }}</strong>
-          <span>destacados en portada</span>
+          <span>selecciones destacadas</span>
         </article>
       </div>
     </section>
@@ -56,7 +56,7 @@ const featuredCount = computed(() => productsStore.items.filter((product) => pro
       <div class="section-heading section-heading--inline">
         <div>
           <p class="eyebrow">Filtrar rapido</p>
-          <h2>Elegi por categoria</h2>
+          <h2>Explora por categoria</h2>
         </div>
       </div>
 

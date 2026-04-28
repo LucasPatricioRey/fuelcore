@@ -60,7 +60,7 @@ const createFallbackDataUri = (product) => {
     <rect x='78' y='78' width='744' height='744' rx='48' fill='none' stroke='rgba(255,255,255,0.14)' />
     <text x='100' y='190' fill='${accent}' font-family='Arial, sans-serif' font-size='34' letter-spacing='8'>${subtitle}</text>
     <text x='100' y='370' fill='%23f4ede6' font-family='Arial, sans-serif' font-size='72' font-weight='700'>${title}</text>
-    <text x='100' y='470' fill='%23c7ced9' font-family='Arial, sans-serif' font-size='28'>Suplementacion lista para rendir mejor.</text>
+    <text x='100' y='470' fill='%23c7ced9' font-family='Arial, sans-serif' font-size='28'>Linea premium para fuerza, energia y recuperacion.</text>
     <rect x='100' y='605' width='212' height='88' rx='44' fill='${accent}' />
     <text x='146' y='660' fill='%230d1117' font-family='Arial, sans-serif' font-size='28' font-weight='700'>FUELCORE</text>
   </svg>`.replace(/\n\s+/g, '')

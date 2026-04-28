@@ -34,10 +34,10 @@ const handleStatusChange = async (orderId, event) => {
   <main class="page-shell">
     <section class="account-hero">
       <p class="eyebrow">Admin</p>
-      <h1>Centro operativo con metricas, ordenes y stock en un solo lugar.</h1>
+      <h1>Vision general del negocio en un solo panel.</h1>
       <p class="hero-copy">
-        Dashboard inicial enfocado en lectura rapida, control de estados y señales utiles para una
-        marca que quiere verse comercial de verdad.
+        Consulta ventas acumuladas, ordenes recientes y niveles de stock desde una vista pensada
+        para control rapido.
       </p>
     </section>
 
@@ -65,6 +65,7 @@ const handleStatusChange = async (orderId, event) => {
     <section class="cart-layout">
       <div class="summary-card admin-panel">
         <p class="eyebrow">Top productos</p>
+        <h2 class="summary-card__title">Mayor salida</h2>
         <p v-if="isLoadingSummary" class="state-message">Cargando metricas...</p>
         <div v-else-if="summary?.topProducts?.length" class="admin-list">
           <div v-for="product in summary.topProducts" :key="product.name" class="summary-row">
@@ -76,6 +77,7 @@ const handleStatusChange = async (orderId, event) => {
 
       <div class="summary-card admin-panel">
         <p class="eyebrow">Stock bajo</p>
+        <h2 class="summary-card__title">Reposicion sugerida</h2>
         <p v-if="isLoadingSummary" class="state-message">Cargando stock...</p>
         <div v-else-if="summary?.lowStockProducts?.length" class="admin-list">
           <div
@@ -92,6 +94,7 @@ const handleStatusChange = async (orderId, event) => {
 
     <section class="summary-card admin-orders">
       <p class="eyebrow">Ordenes recientes</p>
+      <h2 class="summary-card__title">Gestion operativa</h2>
       <p v-if="isLoadingOrders" class="state-message">Cargando ordenes...</p>
 
       <div v-else class="admin-orders__table">

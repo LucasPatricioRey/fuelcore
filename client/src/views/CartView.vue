@@ -15,16 +15,15 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
     <section class="cart-layout">
       <div class="cart-list">
         <div class="section-heading">
-          <p class="eyebrow">Carrito activo</p>
-          <h1>Tu stack de compra, listo para cerrar la orden.</h1>
+          <p class="eyebrow">Carrito</p>
+          <h1>Todo listo para confirmar tu pedido.</h1>
           <p class="hero-copy">
-            Ajusta cantidades, revisa el mix de productos y pasa al checkout con un resumen mas
-            claro y mas comercial.
+            Revisa cantidades, ajusta tu seleccion y continua al pago cuando tengas la compra lista.
           </p>
         </div>
 
         <p v-if="!items.length" class="state-message">
-          Tu carrito esta vacio por ahora. Explora la tienda y suma productos para seguir.
+          Tu carrito esta vacio por ahora. Explora la tienda y suma productos para continuar.
         </p>
 
         <article v-for="item in items" :key="item.slug" class="cart-item">
@@ -37,7 +36,7 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
           <div class="cart-item__content">
             <div>
               <h3>{{ item.name }}</h3>
-              <p class="product-card__meta">{{ formatPrice(item.price) }}</p>
+              <p class="product-card__meta">{{ formatPrice(item.price) }} por unidad</p>
               <p class="cart-item__line-total">{{ formatPrice(item.price * item.quantity) }}</p>
             </div>
 
@@ -60,7 +59,7 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
                 </button>
               </div>
 
-              <button class="ghost-button" type="button" @click="cartStore.removeItem(item.slug)">
+              <button class="ghost-button cart-item__remove" type="button" @click="cartStore.removeItem(item.slug)">
                 Quitar
               </button>
             </div>
@@ -70,7 +69,7 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
 
       <aside class="summary-card">
         <p class="eyebrow">Resumen</p>
-        <h2 class="summary-card__title">Orden actual</h2>
+        <h2 class="summary-card__title">Tu orden</h2>
         <div class="summary-row">
           <span>Productos</span>
           <strong>{{ totalItems }}</strong>
@@ -80,8 +79,8 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
           <strong>{{ formatPrice(subtotal) }}</strong>
         </div>
         <div class="summary-row">
-          <span>Envio</span>
-          <strong>A definir</strong>
+          <span>Entrega</span>
+          <strong>Se calcula al confirmar</strong>
         </div>
 
         <button
@@ -90,7 +89,7 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
           :disabled="!items.length"
           @click="router.push('/checkout')"
         >
-          Continuar al checkout
+          Continuar al pago
         </button>
       </aside>
     </section>
