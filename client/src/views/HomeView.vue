@@ -2,26 +2,9 @@
 import { computed, onMounted } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
 import { useProductsStore } from '../stores/products'
+import bannerFuelCore from '../assets/banner-fuelcore.png'
 
 const productsStore = useProductsStore()
-
-const featurePromos = [
-  {
-    title: 'Creatina y fuerza',
-    copy: 'Mono, micronizada y formulas para sumar potencia en entrenamientos exigentes.',
-    label: 'Mas buscado',
-  },
-  {
-    title: 'Proteinas y recuperacion',
-    copy: 'Whey, blends y opciones para completar el post entrenamiento.',
-    label: 'Top ventas',
-  },
-  {
-    title: 'Pre entreno y energia',
-    copy: 'Lineas para foco, empuje y mejor arranque antes de cada sesion.',
-    label: 'Novedades',
-  },
-]
 
 const categoryCards = [
   {
@@ -69,42 +52,25 @@ const featuredProducts = computed(() => {
 
 <template>
   <main class="page-shell page-shell--home">
-    <section class="home-hero">
-      <div class="home-hero__main">
-        <p class="eyebrow">FuelCore performance store</p>
-        <h1>Suplementos, promociones y categorias listas para comprar.</h1>
-        <p class="home-hero__copy">
-          Compra creatina, proteinas, pre entrenos y combos con una experiencia directa, comercial
-          y mas cercana a una tienda real del rubro fitness argentino.
-        </p>
+    <section class="home-banner">
+      <router-link class="home-banner__frame" to="/tienda">
+        <img :src="bannerFuelCore" alt="FuelCore banner principal" />
+      </router-link>
+    </section>
 
-        <div class="hero-actions home-hero__actions">
-          <router-link class="primary-link" to="/tienda">Comprar suplementos</router-link>
-          <router-link class="secondary-link" to="/tienda">Ver ofertas del catalogo</router-link>
-        </div>
-
-        <div class="home-hero__benefits">
-          <span>Envios a todo el pais</span>
-          <span>Promociones bancarias</span>
-          <span>Checkout con Mercado Pago</span>
-        </div>
-      </div>
-
-      <aside class="home-hero__aside">
-        <article class="home-promo home-promo--primary">
-          <small>Beneficio destacado</small>
-          <h2>Aprovecha el beneficio del envio gratis en compras seleccionadas.</h2>
-          <p>Compra tus suplementos y completa el carrito con una lectura simple y comercial.</p>
-        </article>
-
-        <div class="home-promo-grid">
-          <article v-for="promo in featurePromos" :key="promo.title" class="home-promo">
-            <small>{{ promo.label }}</small>
-            <h3>{{ promo.title }}</h3>
-            <p>{{ promo.copy }}</p>
-          </article>
-        </div>
-      </aside>
+    <section class="home-promo-strip">
+      <article class="home-promo-strip__card">
+        <strong>Envios a todo el pais</strong>
+        <span>Recibi tus suplementos con una experiencia de compra simple y segura.</span>
+      </article>
+      <article class="home-promo-strip__card">
+        <strong>Mercado Pago protegido</strong>
+        <span>Paga con checkout real y seguimiento desde tu cuenta.</span>
+      </article>
+      <article class="home-promo-strip__card">
+        <strong>Combos y rendimiento</strong>
+        <span>Arma tu stack con creatina, proteinas y pre entrenos en una sola tienda.</span>
+      </article>
     </section>
 
     <section class="home-strip">
