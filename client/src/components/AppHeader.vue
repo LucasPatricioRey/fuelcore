@@ -31,21 +31,10 @@ const accountRoute = computed(() => (isAuthenticated.value ? '/mi-cuenta' : '/lo
 const accountSubtitle = computed(() =>
   isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
 )
-const isCompact = ref(false)
-const compactEnterOffset = 220
-const compactExitOffset = 160
+const showCompactNav = ref(false)
 
 const handleScroll = () => {
-  const currentScroll = window.scrollY
-
-  if (!isCompact.value && currentScroll > compactEnterOffset) {
-    isCompact.value = true
-    return
-  }
-
-  if (isCompact.value && currentScroll < compactExitOffset) {
-    isCompact.value = false
-  }
+  showCompactNav.value = window.scrollY > 160
 }
 
 onMounted(() => {
@@ -68,7 +57,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <header class="site-header site-header--commerce" :class="{ 'site-header--compact': isCompact }">
+  <header class="site-header site-header--commerce">
     <div class="site-header__top">
       <div class="promo-bar">
         <div class="promo-bar__inner">
@@ -93,57 +82,67 @@ const handleLogout = () => {
       </div>
     </div>
 
-    <div class="site-header__sticky">
-      <div class="header-main">
-        <div class="header-main__inner">
-          <router-link class="brand-mark brand-mark--commerce" to="/">
-            <span class="brand-mark__top">FuelCore</span>
-            <span class="brand-mark__bottom">PERFORMANCE STORE</span>
+    <div class="header-main">
+      <div class="header-main__inner">
+        <router-link class="brand-mark brand-mark--commerce" to="/">
+          <span class="brand-mark__top">FuelCore</span>
+          <span class="brand-mark__bottom">PERFORMANCE STORE</span>
+        </router-link>
+
+        <button class="header-search" type="button" @click="goToShop">
+          <span class="header-search__field">Que estas buscando?</span>
+          <span class="header-search__action">Buscar</span>
+        </button>
+
+        <div class="header-main__actions">
+          <router-link class="header-account" :to="accountRoute">
+            <span class="header-account__icon">MI</span>
+            <span class="header-account__copy">
+              <strong>{{ accountLabel }}</strong>
+              <small>{{ accountSubtitle }}</small>
+            </span>
           </router-link>
 
-          <button class="header-search" type="button" @click="goToShop">
-            <span class="header-search__field">Que estas buscando?</span>
-            <span class="header-search__action">Buscar</span>
+          <router-link class="header-cart" to="/carrito">
+            <span class="header-cart__icon">Cart</span>
+            <span class="header-cart__copy">
+              <strong>Carrito</strong>
+              <small>{{ totalItems }} producto{{ totalItems === 1 ? '' : 's' }}</small>
+            </span>
+            <span class="header-cart__count">{{ totalItems }}</span>
+          </router-link>
+
+          <button
+            v-if="isAuthenticated"
+            class="ghost-button header-logout"
+            type="button"
+            @click="handleLogout"
+          >
+            Salir
           </button>
-
-          <div class="header-main__actions">
-            <router-link class="header-account" :to="accountRoute">
-              <span class="header-account__icon">MI</span>
-              <span class="header-account__copy">
-                <strong>{{ accountLabel }}</strong>
-                <small>{{ accountSubtitle }}</small>
-              </span>
-            </router-link>
-
-            <router-link class="header-cart" to="/carrito">
-              <span class="header-cart__icon">Cart</span>
-              <span class="header-cart__copy">
-                <strong>Carrito</strong>
-                <small>{{ totalItems }} producto{{ totalItems === 1 ? '' : 's' }}</small>
-              </span>
-              <span class="header-cart__count">{{ totalItems }}</span>
-            </router-link>
-
-            <button
-              v-if="isAuthenticated"
-              class="ghost-button header-logout"
-              type="button"
-              @click="handleLogout"
-            >
-              Salir
-            </button>
-          </div>
         </div>
       </div>
-
-      <nav class="catalog-nav">
-        <div class="catalog-nav__inner">
-          <router-link class="catalog-nav__categories" to="/tienda">Categorias</router-link>
-          <router-link v-for="link in navigationLinks" :key="link.label" :to="link.to">
-            {{ link.label }}
-          </router-link>
-        </div>
-      </nav>
     </div>
+
+    <nav class="catalog-nav">
+      <div class="catalog-nav__inner">
+        <router-link class="catalog-nav__categories" to="/tienda">Categorias</router-link>
+        <router-link v-for="link in navigationLinks" :key="link.label" :to="link.to">
+          {{ link.label }}
+        </router-link>
+      </div>
+    </nav>
   </header>
+
+  <div class="compact-nav" :class="{ 'compact-nav--visible': showCompactNav }">
+    <div class="compact-nav__inner">
+      <router-link class="compact-nav__brand" to="/">FuelCore</router-link>
+      <router-link class="compact-nav__link compact-nav__link--primary" to="/tienda">
+        Categorias
+      </router-link>
+      <router-link v-for="link in navigationLinks" :key="`compact-${link.label}`" class="compact-nav__link" :to="link.to">
+        {{ link.label }}
+      </router-link>
+    </div>
+  </div>
 </template>
