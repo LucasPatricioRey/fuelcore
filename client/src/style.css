@@ -2878,7 +2878,7 @@ img {
 
 @media (max-width: 560px) {
   .header-main__inner {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 0.5rem;
     padding: 0.68rem 0;
   }
@@ -2894,6 +2894,7 @@ img {
   .mobile-nav-toggle {
     min-width: 2.9rem;
     min-height: 2.9rem;
+    order: 3;
   }
 
   .header-search__field {
@@ -2902,18 +2903,18 @@ img {
   }
 
   .header-main__actions {
-    grid-column: 1 / -1;
-    order: 5;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.4rem;
+    grid-column: auto;
+    order: 2;
+    width: auto;
+    display: inline-flex;
+    justify-self: end;
+    gap: 0.35rem;
   }
 
   .header-account,
   .header-cart,
   .header-logout {
-    width: 100%;
+    width: auto;
     min-height: 2.9rem;
     justify-content: center;
     padding-inline: 0.45rem;
