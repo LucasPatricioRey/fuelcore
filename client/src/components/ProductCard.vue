@@ -24,13 +24,15 @@ const installmentText = computed(() => {
   return `3 x ${formatPrice(installmentAmount)}`
 })
 
-const categoryLabel = computed(() =>
-  (props.product.category ?? '')
+const formatTaxonomyLabel = (value) =>
+  (value ?? '')
     .split('-')
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' '),
-)
+    .join(' ')
+
+const categoryLabel = computed(() => formatTaxonomyLabel(props.product.category))
+const goalLabel = computed(() => formatTaxonomyLabel(props.product.goal))
 </script>
 
 <template>
@@ -48,7 +50,7 @@ const categoryLabel = computed(() =>
 
     <div class="product-card__body product-card__body--commerce">
       <div class="product-card__intro">
-        <p class="product-card__meta">{{ product.goal }} / {{ categoryLabel }}</p>
+        <p class="product-card__meta">{{ goalLabel }} / {{ categoryLabel }}</p>
         <h3>{{ product.name }}</h3>
       </div>
 
