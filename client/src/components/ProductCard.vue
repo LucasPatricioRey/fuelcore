@@ -42,9 +42,8 @@ const installmentText = computed(() => {
 
     <div class="product-card__body product-card__body--commerce">
       <div class="product-card__intro">
-        <p class="product-card__meta">{{ product.goal }} · stock disponible</p>
+        <p class="product-card__meta">{{ product.goal }} · {{ theme.eyebrow }}</p>
         <h3>{{ product.name }}</h3>
-        <p class="product-card__description">{{ product.description }}</p>
       </div>
 
       <div class="product-card__price-block">
@@ -63,7 +62,7 @@ const installmentText = computed(() => {
           <strong>{{ product.stock }}</strong>
           <small>unidades</small>
         </span>
-        <span class="product-card__shipping">Envio a todo el pais</span>
+        <span class="product-card__shipping">en stock</span>
       </div>
 
       <div class="product-card__actions">

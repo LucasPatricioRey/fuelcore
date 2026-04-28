@@ -6,22 +6,28 @@ import { useProductsStore } from '../stores/products'
 const productsStore = useProductsStore()
 const categoryOptions = ['todas', 'proteinas', 'creatina', 'pre-entrenos', 'packs']
 const goalOptions = ['todos', 'recuperacion', 'fuerza', 'energia', 'rendimiento']
-const quickPicks = ['Mas vendidos', 'Nuevos ingresos', 'Combos', 'Marcas premium']
 
 const filters = reactive({
   search: '',
   category: 'todas',
   goal: 'todos',
   sort: 'latest',
+  minPrice: '',
+  maxPrice: '',
 })
 
 const activeFilterCount = computed(() =>
-  [filters.search, filters.category !== 'todas', filters.goal !== 'todos', filters.sort !== 'latest']
+  [
+    filters.search,
+    filters.category !== 'todas',
+    filters.goal !== 'todos',
+    filters.sort !== 'latest',
+    filters.minPrice,
+    filters.maxPrice,
+  ]
     .filter(Boolean)
     .length,
 )
-
-const featuredCount = computed(() => productsStore.items.filter((product) => product.featured).length)
 
 const loadProducts = () =>
   productsStore.fetchProducts({
@@ -29,14 +35,28 @@ const loadProducts = () =>
     category: filters.category === 'todas' ? '' : filters.category,
     goal: filters.goal === 'todos' ? '' : filters.goal,
     sort: filters.sort,
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
   })
 
 onMounted(loadProducts)
 
 watch(
-  () => [filters.search, filters.category, filters.goal, filters.sort],
+  () => [filters.category, filters.goal, filters.sort],
   () => {
     loadProducts()
+  },
+)
+
+let searchTimeout = null
+
+watch(
+  () => [filters.search, filters.minPrice, filters.maxPrice],
+  () => {
+    clearTimeout(searchTimeout)
+    searchTimeout = setTimeout(() => {
+      loadProducts()
+    }, 250)
   },
 )
 
@@ -45,102 +65,94 @@ const resetFilters = () => {
   filters.category = 'todas'
   filters.goal = 'todos'
   filters.sort = 'latest'
+  filters.minPrice = ''
+  filters.maxPrice = ''
 }
 </script>
 
 <template>
   <main class="page-shell page-shell--storefront">
-    <section class="shop-banner">
-      <div class="shop-banner__copy">
-        <p class="eyebrow">Tienda online</p>
-        <h1>Explora un catalogo con lectura de tienda real, filtros claros y productos listos para comprar.</h1>
-        <p class="hero-copy">
-          FuelCore ordena la compra por categoria, objetivo y precio para que la navegacion se
-          sienta mas parecida a una tienda comercial que a una maqueta de portfolio.
-        </p>
+    <section class="catalog-header">
+      <div>
+        <p class="eyebrow">Inicio · Suplementos</p>
+        <h1>Suplementos</h1>
       </div>
 
-      <div class="shop-banner__meta">
-        <article class="shop-banner__stat">
-          <strong>{{ productsStore.items.length || 4 }}</strong>
-          <span>productos visibles</span>
-        </article>
-        <article class="shop-banner__stat">
-          <strong>{{ featuredCount || 3 }}</strong>
-          <span>destacados activos</span>
-        </article>
-      </div>
+      <label class="catalog-header__sort">
+        <span>Ordenar</span>
+        <select v-model="filters.sort">
+          <option value="latest">Nuevos ingresos</option>
+          <option value="price_asc">Menor precio</option>
+          <option value="price_desc">Mayor precio</option>
+          <option value="name_asc">Nombre A-Z</option>
+        </select>
+      </label>
     </section>
 
-    <section class="quick-picks">
-      <span v-for="pick in quickPicks" :key="pick">{{ pick }}</span>
-    </section>
-
-    <section class="filters-panel">
-      <div class="filters-panel__header">
-        <div>
-          <p class="eyebrow">Filtrado comercial</p>
-          <h2>Encuentra rapido la linea que mas te conviene</h2>
+    <section class="catalog-layout">
+      <aside class="catalog-sidebar">
+        <div class="catalog-filter-box">
+          <label class="form-field">
+            <span>Buscar</span>
+            <input v-model="filters.search" type="text" placeholder="Whey, creatina, pre..." />
+          </label>
         </div>
 
-        <button v-if="activeFilterCount" class="ghost-button shop-toolbar__reset" type="button" @click="resetFilters">
+        <div class="catalog-filter-box">
+          <label class="form-field">
+            <span>Categoria</span>
+            <select v-model="filters.category">
+              <option v-for="category in categoryOptions" :key="category" :value="category">
+                {{ category }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <div class="catalog-filter-box">
+          <label class="form-field">
+            <span>Objetivo</span>
+            <select v-model="filters.goal">
+              <option v-for="goal in goalOptions" :key="goal" :value="goal">
+                {{ goal }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <div class="catalog-filter-box">
+          <span class="catalog-filter-box__title">Precio</span>
+          <div class="catalog-filter-box__price">
+            <input v-model="filters.minPrice" type="number" min="0" placeholder="Desde" />
+            <input v-model="filters.maxPrice" type="number" min="0" placeholder="Hasta" />
+          </div>
+        </div>
+
+        <button v-if="activeFilterCount" class="ghost-button catalog-filter-box__reset" type="button" @click="resetFilters">
           Limpiar filtros
         </button>
+      </aside>
+
+      <div class="catalog-results">
+        <div class="results-bar results-bar--catalog">
+          <strong>{{ productsStore.items.length }}</strong>
+          <span>productos disponibles para compra online</span>
+        </div>
+
+        <p v-if="productsStore.isLoading" class="state-message">Cargando productos...</p>
+        <p v-else-if="productsStore.error" class="state-message">{{ productsStore.error }}</p>
+        <p v-else-if="!productsStore.items.length" class="state-message">
+          No encontramos productos con esos filtros. Prueba otra combinacion.
+        </p>
+
+        <section v-else class="product-grid product-grid--catalog">
+          <ProductCard
+            v-for="product in productsStore.items"
+            :key="product._id ?? product.slug"
+            :product="product"
+          />
+        </section>
       </div>
-
-      <div class="filters-panel__grid">
-        <label class="form-field">
-          <span>Buscar producto</span>
-          <input v-model="filters.search" type="text" placeholder="Whey, creatina, pre entreno..." />
-        </label>
-
-        <label class="form-field">
-          <span>Categoria</span>
-          <select v-model="filters.category">
-            <option v-for="category in categoryOptions" :key="category" :value="category">
-              {{ category }}
-            </option>
-          </select>
-        </label>
-
-        <label class="form-field">
-          <span>Objetivo</span>
-          <select v-model="filters.goal">
-            <option v-for="goal in goalOptions" :key="goal" :value="goal">
-              {{ goal }}
-            </option>
-          </select>
-        </label>
-
-        <label class="form-field">
-          <span>Ordenar</span>
-          <select v-model="filters.sort">
-            <option value="latest">Nuevos ingresos</option>
-            <option value="price_asc">Menor precio</option>
-            <option value="price_desc">Mayor precio</option>
-            <option value="name_asc">Nombre A-Z</option>
-          </select>
-        </label>
-      </div>
-    </section>
-
-    <div class="results-bar">
-      <strong>{{ productsStore.items.length }}</strong>
-      <span>resultados listos para compra online</span>
-    </div>
-
-    <p v-if="productsStore.isLoading" class="state-message">Cargando productos...</p>
-    <p v-else-if="productsStore.error" class="state-message">{{ productsStore.error }}</p>
-    <p v-else-if="!productsStore.items.length" class="state-message">
-      No encontramos productos para esa combinacion. Ajusta los filtros y vuelve a intentar.
-    </p>
-
-    <section v-else class="product-grid product-grid--commerce">
-      <ProductCard
-        v-for="product in productsStore.items"
-        :key="product._id ?? product.slug"
-        :product="product"
-      />
     </section>
   </main>
 </template>

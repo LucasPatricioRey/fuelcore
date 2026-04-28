@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
@@ -26,6 +26,20 @@ const featuredLinks = [
 
 const accountLabel = computed(() => (isAuthenticated.value ? 'Mi cuenta' : 'Ingresar'))
 const accountRoute = computed(() => (isAuthenticated.value ? '/mi-cuenta' : '/login'))
+const isCompact = ref(false)
+
+const handleScroll = () => {
+  isCompact.value = window.scrollY > 48
+}
+
+onMounted(() => {
+  handleScroll()
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 const handleLogout = () => {
   authStore.logout()
@@ -34,15 +48,15 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <header class="site-header site-header--commerce">
-    <div class="promo-bar">
+  <header class="site-header site-header--commerce" :class="{ 'site-header--compact': isCompact }">
+    <div class="promo-bar" v-show="!isCompact">
       <div class="promo-bar__inner">
         <strong>Envio gratis en AMBA desde $65.000</strong>
         <span>Precios online y promociones por tiempo limitado</span>
       </div>
     </div>
 
-    <div class="utility-strip">
+    <div class="utility-strip" v-show="!isCompact">
       <div class="utility-strip__inner">
         <div class="utility-strip__notes">
           <span v-for="note in utilityNotes" :key="note">{{ note }}</span>
@@ -52,6 +66,7 @@ const handleLogout = () => {
           <router-link :to="accountRoute">{{ accountLabel }}</router-link>
           <router-link v-if="!isAuthenticated" to="/registro">Crear cuenta</router-link>
           <span v-else class="session-pill">{{ userFullName }}</span>
+          <router-link v-if="isAdmin" to="/admin">Admin FuelCore</router-link>
         </div>
       </div>
     </div>
