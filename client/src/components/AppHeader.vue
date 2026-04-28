@@ -68,8 +68,8 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <header class="site-header site-header--commerce" :class="{ 'site-header--compact': isCompact }">
-    <div class="site-header__stack">
+  <header class="site-header site-header--commerce">
+    <div class="site-header__top">
       <div class="promo-bar">
         <div class="promo-bar__inner">
           <strong>ENVIO GRATIS A CABA Y GBA DESDE $65.000 / RESTO $85.000</strong>
@@ -91,7 +91,9 @@ const handleLogout = () => {
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="site-header__sticky" :class="{ 'site-header--compact': isCompact }">
       <div class="header-main">
         <div class="header-main__inner">
           <router-link class="brand-mark brand-mark--commerce" to="/">
