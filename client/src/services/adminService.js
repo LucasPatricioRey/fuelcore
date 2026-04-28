@@ -24,3 +24,10 @@ export const updateAdminOrderStatus = async ({ token, orderId, status }) =>
       status,
     },
   })
+
+export const getAdminProducts = async (token) =>
+  apiRequest('/products?includeInactive=true&sort=latest', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
