@@ -38,8 +38,8 @@ const isMobileViewport = ref(false)
 const isMobileMenuOpen = ref(false)
 
 const isCompact = ref(false)
-const compactEnterOffset = 320
-const compactExitOffset = 36
+const compactEnterOffset = 380
+const compactExitOffset = 12
 
 const updateViewportState = () => {
   const nextIsMobile = window.innerWidth <= 980
