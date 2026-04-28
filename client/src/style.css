@@ -889,7 +889,7 @@ img {
   margin-top: 0.2rem;
 }
 
-.home-section-heading__title {
+.home-section-heading .home-section-heading__title {
   width: auto;
   max-width: 100%;
   margin: 0 auto;
@@ -906,12 +906,14 @@ img {
   transform: none;
 }
 
-.home-section-heading__title--categories {
+.home-section-heading .home-section-heading__title--categories {
   font-size: clamp(1.22rem, 1.7vw, 1.95rem);
+  max-width: none;
 }
 
-.home-section-heading__title--featured {
+.home-section-heading .home-section-heading__title--featured {
   font-size: clamp(0.98rem, 1.35vw, 1.48rem);
+  max-width: none;
 }
 
 .home-categories__grid,
