@@ -34,12 +34,30 @@ const accountSubtitle = computed(() =>
   isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
 )
 const searchTerm = ref('')
+const isMobileViewport = ref(false)
+const isMobileMenuOpen = ref(false)
 
 const isCompact = ref(false)
-const compactEnterOffset = 220
-const compactExitOffset = 140
+const compactEnterOffset = 320
+const compactExitOffset = 36
+
+const updateViewportState = () => {
+  const nextIsMobile = window.innerWidth <= 980
+  isMobileViewport.value = nextIsMobile
+
+  if (nextIsMobile) {
+    isCompact.value = false
+  } else {
+    isMobileMenuOpen.value = false
+  }
+}
 
 const handleScroll = () => {
+  if (isMobileViewport.value) {
+    isCompact.value = false
+    return
+  }
+
   const currentScroll = window.scrollY
 
   if (!isCompact.value && currentScroll > compactEnterOffset) {
@@ -53,12 +71,15 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
+  updateViewportState()
   handleScroll()
   window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('resize', updateViewportState, { passive: true })
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', updateViewportState)
 })
 
 watch(
@@ -67,6 +88,13 @@ watch(
     searchTerm.value = typeof value === 'string' ? value : ''
   },
   { immediate: true },
+)
+
+watch(
+  () => route.fullPath,
+  () => {
+    isMobileMenuOpen.value = false
+  },
 )
 
 const submitSearch = () => {
@@ -80,6 +108,10 @@ const submitSearch = () => {
 const handleLogout = () => {
   authStore.logout()
   router.push('/')
+}
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 </script>
 
@@ -170,10 +202,22 @@ const handleLogout = () => {
             Salir
           </button>
         </div>
+
+        <button
+          class="mobile-nav-toggle"
+          type="button"
+          :aria-expanded="isMobileMenuOpen ? 'true' : 'false'"
+          aria-label="Abrir navegacion"
+          @click="toggleMobileMenu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
 
-    <nav class="catalog-nav">
+    <nav class="catalog-nav" :class="{ 'catalog-nav--open': isMobileMenuOpen }">
       <div class="catalog-nav__inner">
         <router-link class="catalog-nav__categories" to="/tienda">Categorias</router-link>
         <router-link v-for="link in navigationLinks" :key="link.label" :to="link.to">
