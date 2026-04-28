@@ -1,11 +1,25 @@
 <script setup>
-import { computed, onMounted, reactive, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
 import { useProductsStore } from '../stores/products'
 
 const productsStore = useProductsStore()
-const categoryOptions = ['todas', 'proteinas', 'creatina', 'pre-entrenos', 'packs']
-const goalOptions = ['todos', 'recuperacion', 'fuerza', 'energia', 'rendimiento']
+
+const categoryOptions = [
+  { value: 'todas', label: 'Todas las categorias' },
+  { value: 'proteinas', label: 'Proteinas' },
+  { value: 'creatina', label: 'Pre intra & creatina' },
+  { value: 'pre-entrenos', label: 'Performance' },
+  { value: 'packs', label: 'Vitaminas & suplementos' },
+]
+
+const goalOptions = [
+  { value: 'todos', label: 'Todos los objetivos' },
+  { value: 'recuperacion', label: 'Recuperacion' },
+  { value: 'fuerza', label: 'Fuerza' },
+  { value: 'energia', label: 'Energia' },
+  { value: 'rendimiento', label: 'Control de peso' },
+]
 
 const filters = reactive({
   search: '',
@@ -15,6 +29,9 @@ const filters = reactive({
   minPrice: '',
   maxPrice: '',
 })
+
+const isCategoryOpen = ref(false)
+const isGoalOpen = ref(false)
 
 const activeFilterCount = computed(() =>
   [
@@ -27,6 +44,14 @@ const activeFilterCount = computed(() =>
   ]
     .filter(Boolean)
     .length,
+)
+
+const selectedCategoryLabel = computed(
+  () => categoryOptions.find((option) => option.value === filters.category)?.label ?? 'Categorias',
+)
+
+const selectedGoalLabel = computed(
+  () => goalOptions.find((option) => option.value === filters.goal)?.label ?? 'Objetivos',
 )
 
 const loadProducts = () =>
@@ -68,11 +93,11 @@ const activeFilters = computed(() => {
   }
 
   if (filters.category !== 'todas') {
-    items.push(`Categoria: ${filters.category}`)
+    items.push(`Categoria: ${selectedCategoryLabel.value}`)
   }
 
   if (filters.goal !== 'todos') {
-    items.push(`Objetivo: ${filters.goal}`)
+    items.push(`Objetivo: ${selectedGoalLabel.value}`)
   }
 
   if (filters.minPrice || filters.maxPrice) {
@@ -82,6 +107,16 @@ const activeFilters = computed(() => {
   return items
 })
 
+const selectCategory = (value) => {
+  filters.category = value
+  isCategoryOpen.value = false
+}
+
+const selectGoal = (value) => {
+  filters.goal = value
+  isGoalOpen.value = false
+}
+
 const resetFilters = () => {
   filters.search = ''
   filters.category = 'todas'
@@ -89,6 +124,8 @@ const resetFilters = () => {
   filters.sort = 'latest'
   filters.minPrice = ''
   filters.maxPrice = ''
+  isCategoryOpen.value = false
+  isGoalOpen.value = false
 }
 </script>
 
@@ -134,26 +171,56 @@ const resetFilters = () => {
           </label>
         </div>
 
-        <div class="catalog-filter-box">
-          <label class="form-field">
-            <span>Categorias</span>
-            <select v-model="filters.category">
-              <option v-for="category in categoryOptions" :key="category" :value="category">
-                {{ category }}
-              </option>
-            </select>
-          </label>
+        <div class="catalog-filter-dropdown">
+          <button
+            class="catalog-filter-dropdown__trigger"
+            :class="{ 'catalog-filter-dropdown__trigger--open': isCategoryOpen }"
+            type="button"
+            @click="isCategoryOpen = !isCategoryOpen"
+          >
+            <span class="catalog-filter-dropdown__label">Categorias</span>
+            <span class="catalog-filter-dropdown__value">{{ selectedCategoryLabel }}</span>
+            <span class="catalog-filter-dropdown__icon">{{ isCategoryOpen ? '⌄' : '›' }}</span>
+          </button>
+
+          <div v-if="isCategoryOpen" class="catalog-filter-dropdown__panel">
+            <button
+              v-for="category in categoryOptions"
+              :key="category.value"
+              class="catalog-filter-dropdown__option"
+              :class="{ 'catalog-filter-dropdown__option--active': filters.category === category.value }"
+              type="button"
+              @click="selectCategory(category.value)"
+            >
+              {{ category.label }}
+            </button>
+          </div>
         </div>
 
-        <div class="catalog-filter-box">
-          <label class="form-field">
-            <span>Objetivo</span>
-            <select v-model="filters.goal">
-              <option v-for="goal in goalOptions" :key="goal" :value="goal">
-                {{ goal }}
-              </option>
-            </select>
-          </label>
+        <div class="catalog-filter-dropdown">
+          <button
+            class="catalog-filter-dropdown__trigger"
+            :class="{ 'catalog-filter-dropdown__trigger--open': isGoalOpen }"
+            type="button"
+            @click="isGoalOpen = !isGoalOpen"
+          >
+            <span class="catalog-filter-dropdown__label">Objetivos</span>
+            <span class="catalog-filter-dropdown__value">{{ selectedGoalLabel }}</span>
+            <span class="catalog-filter-dropdown__icon">{{ isGoalOpen ? '⌄' : '›' }}</span>
+          </button>
+
+          <div v-if="isGoalOpen" class="catalog-filter-dropdown__panel">
+            <button
+              v-for="goal in goalOptions"
+              :key="goal.value"
+              class="catalog-filter-dropdown__option"
+              :class="{ 'catalog-filter-dropdown__option--active': filters.goal === goal.value }"
+              type="button"
+              @click="selectGoal(goal.value)"
+            >
+              {{ goal.label }}
+            </button>
+          </div>
         </div>
 
         <div class="catalog-filter-box">

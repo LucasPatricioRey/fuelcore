@@ -32,8 +32,8 @@ const accountSubtitle = computed(() =>
   isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
 )
 const isCompact = ref(false)
-const compactEnterOffset = 148
-const compactExitOffset = 110
+const compactEnterOffset = 220
+const compactExitOffset = 160
 
 const handleScroll = () => {
   const currentScroll = window.scrollY
