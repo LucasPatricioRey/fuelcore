@@ -153,6 +153,21 @@ const featuredProducts = computed(() => {
           </video>
         </div>
       </section>
+
+      <section class="home-coupon">
+        <div class="home-coupon__overlay">
+          <p class="eyebrow">Beneficio exclusivo</p>
+          <h2>Gana un cupon de 5% OFF</h2>
+          <p class="home-coupon__copy">
+            Aprovecha un descuento exclusivo en tu primera compra y sumalo a tu rutina FuelCore.
+          </p>
+
+          <form class="home-coupon__form" @submit.prevent>
+            <input type="email" placeholder="Email" aria-label="Email para cupon de descuento" />
+            <button class="primary-button" type="submit">Enviar</button>
+          </form>
+        </div>
+      </section>
     </div>
   </main>
 </template>

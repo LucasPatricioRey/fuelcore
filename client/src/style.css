@@ -1001,11 +1001,85 @@ img {
 .home-video__media {
   width: 100%;
   display: block;
-  min-height: 64vh;
-  max-height: 88vh;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   background: #050506;
   pointer-events: none;
+}
+
+.home-coupon {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 6, 0.86), rgba(5, 5, 6, 0.54)),
+    url('/media/cupon-descuento.png') center / cover no-repeat;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.home-coupon__overlay {
+  width: min(calc(100% - 2rem), 920px);
+  margin: 0 auto;
+  padding: 3.2rem 0;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.home-coupon__overlay .eyebrow {
+  margin: 0;
+}
+
+.home-coupon__overlay h2 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: clamp(2.4rem, 4vw, 4.2rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.home-coupon__copy {
+  margin: 0;
+  max-width: 42rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1rem;
+}
+
+.home-coupon__form {
+  width: min(100%, 760px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.7rem;
+  margin-top: 0.35rem;
+}
+
+.home-coupon__form input {
+  width: 100%;
+  min-height: 3.3rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  outline: none;
+}
+
+.home-coupon__form input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.home-coupon__form .primary-button {
+  min-height: 3.3rem;
+  min-width: 150px;
+  border-radius: 0.15rem;
+  background: #ffffff;
+  color: #111113;
+  text-transform: uppercase;
 }
 
 .product-grid--home {
@@ -2441,6 +2515,13 @@ img {
     position: static;
   }
 
+  .home-coupon {
+    min-height: 360px;
+    background:
+      linear-gradient(90deg, rgba(5, 5, 6, 0.88), rgba(5, 5, 6, 0.62)),
+      url('/media/cupon-descuento.png') center right / cover no-repeat;
+  }
+
   .product-detail__media {
     min-height: 420px;
   }
@@ -2517,6 +2598,19 @@ img {
     white-space: normal;
     text-wrap: balance;
     overflow-wrap: anywhere;
+  }
+
+  .home-coupon__overlay {
+    width: min(calc(100% - 1.2rem), 920px);
+  }
+
+  .home-coupon__form {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .home-coupon__form .primary-button {
+    width: 100%;
   }
 
   .catalog-header__sort {
