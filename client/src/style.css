@@ -1036,8 +1036,19 @@ img {
   margin-bottom: 1.5rem;
 }
 
+.admin-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
 .admin-panel {
   min-height: 240px;
+}
+
+.admin-panel--static {
+  position: static;
+  top: auto;
 }
 
 .admin-list {
@@ -1065,6 +1076,7 @@ img {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.95fr);
   gap: 1rem;
+  align-items: start;
 }
 
 .admin-product-form {
@@ -1072,6 +1084,17 @@ img {
   border-radius: 1.4rem;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-product-form__intro {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.admin-product-form__intro h3 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: 1.5rem;
 }
 
 .admin-product-form__toggles {
@@ -1103,11 +1126,23 @@ img {
   gap: 1rem;
 }
 
+.admin-products__list > .state-message {
+  padding: 1rem 0;
+}
+
 .admin-products__inactive {
   padding: 1rem;
   border-radius: 1.3rem;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.summary-row--stacked {
+  align-items: center;
+}
+
+.summary-row--stacked p {
+  margin: 0.3rem 0 0;
 }
 
 .admin-orders__table {
@@ -1132,6 +1167,7 @@ img {
   .info-grid--editorial,
   .category-grid--immersive,
   .shop-filters-grid,
+  .admin-overview,
   .admin-products__layout {
     grid-template-columns: 1fr;
   }

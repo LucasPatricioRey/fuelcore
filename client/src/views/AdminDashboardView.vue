@@ -38,6 +38,7 @@ const goalOptions = ['recuperacion', 'fuerza', 'energia', 'rendimiento']
 
 const activeProducts = computed(() => products.value.filter((product) => product.active))
 const inactiveProducts = computed(() => products.value.filter((product) => !product.active))
+const isEditingProduct = computed(() => Boolean(editingProductId.value))
 
 const slugify = (value) =>
   value
@@ -49,10 +50,13 @@ const slugify = (value) =>
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
 
-const resetForm = () => {
+const resetForm = ({ keepMessage = false } = {}) => {
   Object.assign(form, emptyForm())
   editingProductId.value = ''
-  formMessage.value = ''
+
+  if (!keepMessage) {
+    formMessage.value = ''
+  }
 }
 
 const fillForm = (product) => {
@@ -121,11 +125,11 @@ const handleSaveProduct = async () => {
     })
 
     formMessage.value = editingProductId.value
-      ? 'Producto actualizado correctamente.'
-      : 'Producto creado correctamente.'
-    resetForm()
+      ? 'Producto actualizado correctamente en el catalogo.'
+      : 'Producto creado correctamente y listo para mostrarse en tienda.'
+    resetForm({ keepMessage: true })
   } catch {
-    formMessage.value = 'No se pudo guardar el producto.'
+    formMessage.value = 'No se pudo guardar el producto. Revisa los campos y vuelve a intentarlo.'
   }
 }
 
@@ -135,6 +139,7 @@ const handleDisableProduct = async (productId) => {
       token: authStore.token,
       productId,
     })
+    formMessage.value = 'Producto retirado de la tienda correctamente.'
   } catch {
     formMessage.value = 'No se pudo desactivar el producto.'
   }
@@ -173,8 +178,8 @@ const handleDisableProduct = async (productId) => {
       </article>
     </section>
 
-    <section class="cart-layout">
-      <div class="summary-card admin-panel">
+    <section class="admin-overview">
+      <div class="summary-card admin-panel admin-panel--static">
         <p class="eyebrow">Top productos</p>
         <h2 class="summary-card__title">Mayor salida</h2>
         <p v-if="isLoadingSummary" class="state-message">Cargando metricas...</p>
@@ -184,9 +189,10 @@ const handleDisableProduct = async (productId) => {
             <strong>{{ product.unitsSold }} vendidos</strong>
           </div>
         </div>
+        <p v-else class="state-message">Todavia no hay suficientes ventas para calcular destacados.</p>
       </div>
 
-      <div class="summary-card admin-panel">
+      <div class="summary-card admin-panel admin-panel--static">
         <p class="eyebrow">Stock bajo</p>
         <h2 class="summary-card__title">Reposicion sugerida</h2>
         <p v-if="isLoadingSummary" class="state-message">Cargando stock...</p>
@@ -200,21 +206,34 @@ const handleDisableProduct = async (productId) => {
             <strong>{{ product.stock }} u.</strong>
           </div>
         </div>
+        <p v-else class="state-message">No hay alertas de reposicion urgentes por ahora.</p>
       </div>
     </section>
 
-    <section class="summary-card admin-products">
+    <section class="summary-card admin-products admin-panel--static">
       <div class="admin-products__header">
         <div>
           <p class="eyebrow">Productos</p>
           <h2 class="summary-card__title">Gestion de catalogo</h2>
         </div>
 
-        <button class="ghost-button" type="button" @click="resetForm">Nuevo producto</button>
+        <button class="ghost-button" type="button" @click="resetForm()">
+          {{ isEditingProduct ? 'Crear nuevo producto' : 'Limpiar formulario' }}
+        </button>
       </div>
 
       <div class="admin-products__layout">
         <form class="auth-form admin-product-form" @submit.prevent="handleSaveProduct">
+          <div class="admin-product-form__intro">
+            <p class="eyebrow">{{ isEditingProduct ? 'Edicion activa' : 'Nuevo ingreso' }}</p>
+            <h3>{{ isEditingProduct ? 'Actualiza la ficha del producto' : 'Carga un producto al catalogo' }}</h3>
+            <p class="state-message">
+              {{ isEditingProduct
+                ? 'Edita precio, stock, contenido visual y estado comercial sin salir del panel.'
+                : 'Completa una ficha comercial prolija para publicar el producto en la tienda.' }}
+            </p>
+          </div>
+
           <div class="form-grid">
             <label class="form-field">
               <span>Nombre</span>
@@ -302,16 +321,16 @@ const handleDisableProduct = async (productId) => {
 
           <div class="admin-product-form__actions">
             <button class="primary-button" type="submit" :disabled="isSavingProduct">
-              {{ isSavingProduct ? 'Guardando...' : editingProductId ? 'Guardar cambios' : 'Crear producto' }}
+              {{ isSavingProduct ? 'Guardando...' : isEditingProduct ? 'Guardar cambios' : 'Crear producto' }}
             </button>
-            <button class="ghost-button" type="button" @click="resetForm">Limpiar</button>
+            <button class="ghost-button" type="button" @click="resetForm()">Cancelar</button>
           </div>
         </form>
 
         <div class="admin-products__list">
           <p v-if="isLoadingProducts" class="state-message">Cargando productos...</p>
 
-          <template v-else>
+          <template v-else-if="products.length">
             <article v-for="product in activeProducts" :key="product._id" class="order-card order-card--admin">
               <div class="summary-row">
                 <strong>{{ product.name }}</strong>
@@ -335,23 +354,36 @@ const handleDisableProduct = async (productId) => {
             <div v-if="inactiveProducts.length" class="admin-products__inactive">
               <p class="eyebrow">Inactivos</p>
               <div class="admin-list">
-                <div v-for="product in inactiveProducts" :key="product._id" class="summary-row">
-                  <span>{{ product.name }}</span>
-                  <strong>Oculto</strong>
-                </div>
+                <article
+                  v-for="product in inactiveProducts"
+                  :key="product._id"
+                  class="summary-row summary-row--stacked"
+                >
+                  <div>
+                    <strong>{{ product.name }}</strong>
+                    <p class="state-message">Fuera de catalogo hasta que vuelvas a editarlo.</p>
+                  </div>
+                  <button class="ghost-button" type="button" @click="fillForm(product)">
+                    Editar
+                  </button>
+                </article>
               </div>
             </div>
           </template>
+
+          <p v-else class="state-message">
+            Aun no hay productos cargados en la base. Crea el primero desde este mismo panel.
+          </p>
         </div>
       </div>
     </section>
 
-    <section class="summary-card admin-orders">
+    <section class="summary-card admin-orders admin-panel--static">
       <p class="eyebrow">Ordenes recientes</p>
       <h2 class="summary-card__title">Gestion operativa</h2>
       <p v-if="isLoadingOrders" class="state-message">Cargando ordenes...</p>
 
-      <div v-else class="admin-orders__table">
+      <div v-else-if="orders.length" class="admin-orders__table">
         <article v-for="order in orders" :key="order._id" class="order-card order-card--admin">
           <div class="summary-row">
             <span>Orden</span>
@@ -380,6 +412,8 @@ const handleDisableProduct = async (productId) => {
           </label>
         </article>
       </div>
+
+      <p v-else class="state-message">Todavia no ingresaron ordenes para revisar desde el panel.</p>
     </section>
   </main>
 </template>
