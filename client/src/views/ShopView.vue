@@ -6,6 +6,7 @@ import { useProductsStore } from '../stores/products'
 const productsStore = useProductsStore()
 const categoryOptions = ['todas', 'proteinas', 'creatina', 'pre-entrenos', 'packs']
 const goalOptions = ['todos', 'recuperacion', 'fuerza', 'energia', 'rendimiento']
+const quickPicks = ['Mas vendidos', 'Nuevos ingresos', 'Combos', 'Marcas premium']
 
 const filters = reactive({
   search: '',
@@ -48,34 +49,38 @@ const resetFilters = () => {
 </script>
 
 <template>
-  <main class="page-shell">
-    <section class="shop-hero shop-hero--premium">
-      <div>
-        <p class="eyebrow">Catalogo FuelCore</p>
-        <h1>Suplementos seleccionados para rendimiento, fuerza y recuperacion.</h1>
+  <main class="page-shell page-shell--storefront">
+    <section class="shop-banner">
+      <div class="shop-banner__copy">
+        <p class="eyebrow">Tienda online</p>
+        <h1>Explora un catalogo con lectura de tienda real, filtros claros y productos listos para comprar.</h1>
         <p class="hero-copy">
-          Recorre una seleccion orientada a entrenamiento, constancia y progreso diario, con una
-          presentacion clara y foco comercial.
+          FuelCore ordena la compra por categoria, objetivo y precio para que la navegacion se
+          sienta mas parecida a una tienda comercial que a una maqueta de portfolio.
         </p>
       </div>
 
-      <div class="shop-hero__stats">
-        <article class="shop-stat">
+      <div class="shop-banner__meta">
+        <article class="shop-banner__stat">
           <strong>{{ productsStore.items.length || 4 }}</strong>
           <span>productos visibles</span>
         </article>
-        <article class="shop-stat">
+        <article class="shop-banner__stat">
           <strong>{{ featuredCount || 3 }}</strong>
-          <span>selecciones destacadas</span>
+          <span>destacados activos</span>
         </article>
       </div>
     </section>
 
-    <section class="shop-toolbar shop-toolbar--panel">
-      <div class="section-heading section-heading--inline">
+    <section class="quick-picks">
+      <span v-for="pick in quickPicks" :key="pick">{{ pick }}</span>
+    </section>
+
+    <section class="filters-panel">
+      <div class="filters-panel__header">
         <div>
-          <p class="eyebrow">Explora mejor</p>
-          <h2>Busca y filtra segun tu objetivo</h2>
+          <p class="eyebrow">Filtrado comercial</p>
+          <h2>Encuentra rapido la linea que mas te conviene</h2>
         </div>
 
         <button v-if="activeFilterCount" class="ghost-button shop-toolbar__reset" type="button" @click="resetFilters">
@@ -83,10 +88,10 @@ const resetFilters = () => {
         </button>
       </div>
 
-      <div class="shop-filters-grid">
+      <div class="filters-panel__grid">
         <label class="form-field">
-          <span>Buscar</span>
-          <input v-model="filters.search" type="text" placeholder="Creatina, proteina, pack..." />
+          <span>Buscar producto</span>
+          <input v-model="filters.search" type="text" placeholder="Whey, creatina, pre entreno..." />
         </label>
 
         <label class="form-field">
@@ -110,7 +115,7 @@ const resetFilters = () => {
         <label class="form-field">
           <span>Ordenar</span>
           <select v-model="filters.sort">
-            <option value="latest">Mas recientes</option>
+            <option value="latest">Nuevos ingresos</option>
             <option value="price_asc">Menor precio</option>
             <option value="price_desc">Mayor precio</option>
             <option value="name_asc">Nombre A-Z</option>
@@ -119,13 +124,18 @@ const resetFilters = () => {
       </div>
     </section>
 
+    <div class="results-bar">
+      <strong>{{ productsStore.items.length }}</strong>
+      <span>resultados listos para compra online</span>
+    </div>
+
     <p v-if="productsStore.isLoading" class="state-message">Cargando productos...</p>
     <p v-else-if="productsStore.error" class="state-message">{{ productsStore.error }}</p>
     <p v-else-if="!productsStore.items.length" class="state-message">
-      No encontramos productos para esos filtros. Prueba otra combinacion.
+      No encontramos productos para esa combinacion. Ajusta los filtros y vuelve a intentar.
     </p>
 
-    <section v-else class="product-grid">
+    <section v-else class="product-grid product-grid--commerce">
       <ProductCard
         v-for="product in productsStore.items"
         :key="product._id ?? product.slug"

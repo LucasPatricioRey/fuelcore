@@ -1,140 +1,122 @@
 <script setup>
-const metrics = [
+const heroHighlights = [
   {
-    value: '4 lineas',
-    label: 'catalogo principal',
-    note: 'proteinas, creatina, pre entrenos y packs',
+    title: 'Creatinas y pre entrenos',
+    copy: 'Seleccion de fuerza, energia y pump para entrenar con mas intensidad.',
+    note: 'Ofertas de la semana',
   },
   {
-    value: 'Pagos online',
-    label: 'checkout integrado',
-    note: 'Mercado Pago conectado con ordenes y stock',
-  },
-  {
-    value: 'Panel admin',
-    label: 'control operativo',
-    note: 'ventas, ordenes y productos con bajo stock',
+    title: 'Whey y blends premium',
+    copy: 'Proteinas de rapida reposicion para completar la recuperacion post rutina.',
+    note: 'Top ventas',
   },
 ]
 
 const categories = [
-  {
-    name: 'Proteinas',
-    description: 'Formulas para recuperar mejor y sostener volumen de entrenamiento.',
-    accent: 'Performance',
-  },
-  {
-    name: 'Creatina',
-    description: 'Potencia pura para series pesadas, sprints y constancia semanal.',
-    accent: 'Potencia',
-  },
-  {
-    name: 'Pre entrenos',
-    description: 'Energia, foco y sensacion de empuje antes de entrar al gimnasio.',
-    accent: 'Impulso',
-  },
+  { name: 'Proteinas', count: '32 productos', copy: 'Whey, isolate, vegan y ganadores para todas las etapas.' },
+  { name: 'Creatina', count: '14 productos', copy: 'Mono, micronizada y combinaciones para fuerza y explosividad.' },
+  { name: 'Pre entreno', count: '18 productos', copy: 'Formula para foco, empuje y sensacion de arranque fuerte.' },
+  { name: 'Salud & bienestar', count: '21 productos', copy: 'Vitaminas, omegas, adaptogenos y apoyo diario.' },
 ]
 
-const pillars = [
-  'Compra online con Mercado Pago y ordenes registradas en tiempo real.',
-  'Cuenta de cliente con seguimiento de compras y estados de pago.',
-  'Panel administrativo con ventas, stock bajo y ordenes recientes.',
+const brands = ['ENA', 'Star Nutrition', 'Xtrenght', 'MyProtein', 'BSN', 'Optimum Nutrition']
+
+const trustPillars = [
+  'Pago seguro con Mercado Pago',
+  'Panel de ordenes y seguimiento real',
+  'Stock y catalogo conectados a la base',
+  'Diseño de tienda pensado para conversion',
 ]
 </script>
 
 <template>
-  <main class="page-shell">
-    <section class="hero hero--editorial">
-      <div class="hero__content">
-        <p class="eyebrow">FuelCore Performance Supply</p>
-        <h1>Marca premium para gente que entrena con objetivo.</h1>
+  <main class="page-shell page-shell--storefront">
+    <section class="storefront-hero">
+      <div class="storefront-hero__main">
+        <p class="eyebrow">FuelCore store</p>
+        <h1>Suplementos, nutricion deportiva y accesorios en una tienda hecha para vender.</h1>
         <p class="hero-copy">
-          Suplementos, combos y accesorios presentados como una tienda de nutricion deportiva
-          moderna, con compra real, seguimiento de ordenes y una identidad visual enfocada en
-          rendimiento.
+          Compra creatina, proteinas, pre entrenos y packs con una experiencia directa, visual y
+          orientada al rendimiento. Todo presentado con la logica de un e-commerce real.
         </p>
 
         <div class="hero-actions">
-          <router-link class="primary-link" to="/tienda">Explorar productos</router-link>
-          <a class="secondary-link" href="#categorias">Ver categorias</a>
+          <router-link class="primary-link" to="/tienda">Comprar ahora</router-link>
+          <router-link class="secondary-link" to="/tienda">Ver ofertas destacadas</router-link>
         </div>
 
-        <div class="hero-metrics">
-          <article v-for="metric in metrics" :key="metric.label" class="hero-metric-card">
-            <strong>{{ metric.value }}</strong>
-            <span>{{ metric.label }}</span>
-            <small>{{ metric.note }}</small>
-          </article>
+        <div class="storefront-badges">
+          <span>Envios a todo el pais</span>
+          <span>Promociones bancarias</span>
+          <span>Checkout con Mercado Pago</span>
         </div>
       </div>
 
-      <aside class="hero-spotlight">
-        <div class="hero-spotlight__panel">
-          <p class="eyebrow">Lanzamiento de temporada</p>
-          <h2>Fuerza, energia y recuperacion en una sola seleccion.</h2>
-          <p>
-            Productos pensados para cubrir toda la rutina: pre entrenamiento, potencia,
-            recuperacion y combinaciones listas para una compra mas simple.
-          </p>
-        </div>
+      <aside class="storefront-hero__aside">
+        <article class="feature-banner feature-banner--primary">
+          <small>Promo exclusiva</small>
+          <h2>Combos para fuerza y recuperacion con precio especial.</h2>
+          <p>Arma el stack de entrenamiento sin salir del catalogo principal.</p>
+        </article>
 
-        <div class="hero-spotlight__grid">
-          <article class="spotlight-tile spotlight-tile--primary">
-            <span>Creatina</span>
-            <strong>300 g micronizada</strong>
-          </article>
-          <article class="spotlight-tile">
-            <span>Proteina</span>
-            <strong>Blend post training</strong>
-          </article>
-          <article class="spotlight-tile">
-            <span>Pack</span>
-            <strong>Fuerza + recuperacion</strong>
+        <div class="feature-banner-grid">
+          <article v-for="highlight in heroHighlights" :key="highlight.title" class="feature-banner">
+            <small>{{ highlight.note }}</small>
+            <h3>{{ highlight.title }}</h3>
+            <p>{{ highlight.copy }}</p>
           </article>
         </div>
       </aside>
     </section>
 
-    <section class="section-block section-block--split">
-      <div class="section-heading section-heading--narrow">
-        <p class="eyebrow">Direccion de marca</p>
-        <h2>Una experiencia pensada para inspirar confianza desde la primera visita.</h2>
+    <section class="brand-shelf">
+      <div class="section-heading section-heading--inline">
+        <div>
+          <p class="eyebrow">Marcas y lineas</p>
+          <h2>Una vidriera de suplementos con lectura comercial inmediata.</h2>
+        </div>
       </div>
 
-      <div class="info-grid info-grid--editorial">
-        <article v-for="pillar in pillars" :key="pillar" class="info-card">
-          <h3>{{ pillar }}</h3>
-          <p>
-            Una estructura preparada para sostener crecimiento sin perder claridad visual ni orden
-            operativo.
-          </p>
-        </article>
+      <div class="brand-shelf__rail">
+        <span v-for="brand in brands" :key="brand">{{ brand }}</span>
       </div>
     </section>
 
-    <section id="categorias" class="categories categories--showcase">
+    <section class="catalog-showcase">
       <div class="section-heading">
-        <p class="eyebrow">Categorias destacadas</p>
-        <h2>Lineas creadas para cubrir fuerza, rendimiento y recuperacion.</h2>
+        <p class="eyebrow">Categorias principales</p>
+        <h2>Organiza la tienda como lo haria una marca que vende todos los dias.</h2>
       </div>
 
-      <div class="category-grid category-grid--immersive">
-        <article v-for="category in categories" :key="category.name" class="category-card">
-          <span class="category-card__accent">{{ category.accent }}</span>
-          <h3>{{ category.name }}</h3>
-          <p>{{ category.description }}</p>
-          <router-link class="secondary-link" to="/tienda">Ver productos</router-link>
+      <div class="catalog-showcase__grid">
+        <article v-for="category in categories" :key="category.name" class="catalog-showcase__card">
+          <div>
+            <span class="catalog-showcase__count">{{ category.count }}</span>
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.copy }}</p>
+          </div>
+
+          <router-link class="secondary-link" to="/tienda">Ver categoria</router-link>
         </article>
       </div>
     </section>
 
-    <section class="preview-cta preview-cta--wide">
-      <div class="preview-cta__content">
-        <p class="eyebrow">Explora la tienda</p>
-        <h2>Descubri las lineas principales y empeza tu pedido desde el catalogo.</h2>
+    <section class="offer-strip">
+      <div>
+        <p class="eyebrow">Listo para comprar</p>
+        <h2>Catalogo, carrito, checkout y panel administrativo en una sola experiencia.</h2>
       </div>
+      <router-link class="primary-link" to="/tienda">Ir al catalogo</router-link>
+    </section>
 
-      <router-link class="primary-link" to="/tienda">Ir al catalogo completo</router-link>
+    <section class="trust-grid">
+      <article v-for="pillar in trustPillars" :key="pillar" class="trust-grid__card">
+        <h3>{{ pillar }}</h3>
+        <p>
+          Una base visual y funcional que muestra producto, proceso comercial y operacion real sin
+          sentirse como demo.
+        </p>
+      </article>
     </section>
   </main>
 </template>
