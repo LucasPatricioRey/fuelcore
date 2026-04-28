@@ -20,12 +20,14 @@ const utilityNotes = [
 ]
 
 const navigationLinks = [
-  { label: 'Inicio', to: '/' },
-  { label: 'Suplementos', to: '/tienda' },
-  { label: 'Proteinas', to: '/tienda' },
-  { label: 'Creatina', to: '/tienda' },
-  { label: 'Pre entreno', to: '/tienda' },
-  { label: 'Combos', to: '/tienda' },
+  { label: 'Inicio', to: { path: '/' } },
+  { label: 'Suplementos', to: { path: '/tienda' } },
+  { label: 'Proteinas', to: { path: '/tienda', query: { category: 'proteinas' } } },
+  { label: 'Creatina', to: { path: '/tienda', query: { category: 'creatina' } } },
+  { label: 'Pre entreno', to: { path: '/tienda', query: { category: 'pre-entrenos' } } },
+  { label: 'Aminoacidos', to: { path: '/tienda', query: { category: 'aminoacidos' } } },
+  { label: 'Control de peso', to: { path: '/tienda', query: { category: 'control-peso' } } },
+  { label: 'Barras proteicas', to: { path: '/tienda', query: { category: 'snacks-proteicos' } } },
 ]
 
 const accountLabel = computed(() => (isAuthenticated.value ? 'Mi cuenta' : 'Ingresar'))
@@ -219,7 +221,6 @@ const toggleMobileMenu = () => {
 
     <nav class="catalog-nav" :class="{ 'catalog-nav--open': isMobileMenuOpen }">
       <div class="catalog-nav__inner">
-        <router-link class="catalog-nav__categories" to="/tienda">Categorias</router-link>
         <router-link v-for="link in navigationLinks" :key="link.label" :to="link.to">
           {{ link.label }}
         </router-link>

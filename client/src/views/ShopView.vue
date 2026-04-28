@@ -60,6 +60,27 @@ const selectedGoalLabel = computed(
   () => goalOptions.find((option) => option.value === filters.goal)?.label ?? 'Objetivos',
 )
 
+const currentCategoryTitle = computed(() =>
+  filters.category === 'todas' ? 'Suplementos' : selectedCategoryLabel.value,
+)
+
+const syncFiltersFromRoute = () => {
+  const nextSearch = typeof route.query.q === 'string' ? route.query.q : ''
+  const nextCategory =
+    typeof route.query.category === 'string' &&
+    categoryOptions.some((option) => option.value === route.query.category)
+      ? route.query.category
+      : 'todas'
+
+  if (filters.search !== nextSearch) {
+    filters.search = nextSearch
+  }
+
+  if (filters.category !== nextCategory) {
+    filters.category = nextCategory
+  }
+}
+
 const loadProducts = () =>
   productsStore.fetchProducts({
     search: filters.search.trim(),
@@ -71,10 +92,7 @@ const loadProducts = () =>
   })
 
 onMounted(() => {
-  if (typeof route.query.q === 'string') {
-    filters.search = route.query.q
-  }
-
+  syncFiltersFromRoute()
   loadProducts()
 })
 
@@ -98,13 +116,9 @@ watch(
 )
 
 watch(
-  () => route.query.q,
-  (value) => {
-    const nextSearch = typeof value === 'string' ? value : ''
-
-    if (filters.search !== nextSearch) {
-      filters.search = nextSearch
-    }
+  () => [route.query.q, route.query.category],
+  () => {
+    syncFiltersFromRoute()
   },
 )
 
@@ -156,8 +170,8 @@ const resetFilters = () => {
   <main class="page-shell page-shell--catalog">
     <section class="catalog-hero">
       <div class="catalog-hero__copy">
-        <p class="eyebrow">Inicio / Suplementos</p>
-        <h1>Suplementos</h1>
+        <p class="eyebrow">Inicio / {{ currentCategoryTitle }}</p>
+        <h1>{{ currentCategoryTitle }}</h1>
         <p class="catalog-hero__text">
           Catalogo completo con seleccion de proteinas, creatina, control de peso, aminoacidos,
           pre entrenos y snacks proteicos listos para comprar con una lectura comercial mas clasica.
