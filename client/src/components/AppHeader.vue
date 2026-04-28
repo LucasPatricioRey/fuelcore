@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
+import logoFuelCore from '../assets/logo-fuelcore.png'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -97,13 +98,12 @@ const handleLogout = () => {
     <div class="header-main">
       <div class="header-main__inner">
         <router-link class="brand-mark brand-mark--commerce" to="/">
-          <span class="brand-mark__top">FuelCore</span>
-          <span class="brand-mark__bottom">PERFORMANCE STORE</span>
+          <img :src="logoFuelCore" alt="FuelCore" />
         </router-link>
 
         <button class="header-search" type="button" @click="goToShop">
           <span class="header-search__field">Que estas buscando?</span>
-          <span class="header-search__action">Buscar</span>
+          <span class="header-search__action">⌕</span>
         </button>
 
         <div class="header-main__actions">
