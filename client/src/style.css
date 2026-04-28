@@ -875,8 +875,15 @@ img {
   gap: 1rem;
 }
 
+.home-section-heading > div {
+  flex: 1;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
 .home-section-heading h2 {
-  max-width: 14ch;
+  max-width: 22ch;
   font-size: clamp(2rem, 4vw, 3rem);
 }
 
