@@ -1506,6 +1506,21 @@ img {
   color: #ffffff;
 }
 
+.site-footer__legal {
+  width: min(calc(100% - 2rem), var(--page-width));
+  margin: 0 auto;
+  padding: 0 0 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.site-footer__legal p {
+  margin: 0;
+  padding-top: 1rem;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
 .catalog-active-filters {
   display: flex;
   flex-wrap: wrap;

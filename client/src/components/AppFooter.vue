@@ -32,5 +32,9 @@
         <span>Lun a Sab de 9 a 18 hs</span>
       </div>
     </div>
+
+    <div class="site-footer__legal">
+      <p>© 2026 FuelCore. Todos los derechos reservados. Sitio desarrollado por Lucas Rey.</p>
+    </div>
   </footer>
 </template>
