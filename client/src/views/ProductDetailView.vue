@@ -18,6 +18,20 @@ const isLoading = ref(true)
 
 const canIncrease = computed(() => product.value && quantity.value < product.value.stock)
 const theme = computed(() => getProductTheme(product.value?.category))
+const categoryLabel = computed(() =>
+  (product.value?.category ?? '')
+    .split('-')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' '),
+)
+const installmentText = computed(() => {
+  if (!product.value) {
+    return ''
+  }
+
+  return `3 x ${formatPrice(Math.round(product.value.price / 3))} sin interes`
+})
 
 onMounted(async () => {
   try {
@@ -40,43 +54,48 @@ const addToCart = () => {
 </script>
 
 <template>
-  <main class="page-shell">
+  <main class="page-shell page-shell--detail">
     <p v-if="isLoading" class="state-message">Cargando detalle del producto...</p>
     <p v-else-if="error" class="state-message">{{ error }}</p>
 
     <section v-else-if="product" class="product-detail">
-      <div
-        class="product-detail__media"
-        :style="{ '--product-accent': theme.accent, '--product-glow': theme.shadow }"
-      >
-        <img
-          :src="getProductImage(product)"
-          :alt="product.name"
-          @error="handleProductImageError($event, product)"
-        />
-        <div class="product-detail__glow"></div>
+      <div class="product-detail__media-shell">
+        <div
+          class="product-detail__media"
+          :style="{ '--product-accent': theme.accent, '--product-glow': theme.shadow }"
+        >
+          <img
+            :src="getProductImage(product)"
+            :alt="product.name"
+            @error="handleProductImageError($event, product)"
+          />
+          <div class="product-detail__glow"></div>
+          <span class="product-detail__tag">{{ categoryLabel }}</span>
+        </div>
       </div>
 
       <div class="product-detail__content">
-        <p class="eyebrow">{{ theme.eyebrow }} / {{ product.category }}</p>
+        <p class="eyebrow">Suplementos / {{ theme.eyebrow }}</p>
         <h1>{{ product.name }}</h1>
-        <p class="hero-copy">{{ product.description }}</p>
+        <p class="product-detail__copy">{{ product.description }}</p>
 
-        <div class="detail-meta">
-          <span>Objetivo: {{ product.goal }}</span>
-          <span>Sabor: {{ product.flavor || 'No especificado' }}</span>
-          <span>Stock: {{ product.stock }} unidades</span>
-        </div>
-
-        <div class="detail-price">
+        <div class="detail-price detail-price--commerce">
           <p v-if="product.comparePrice" class="product-card__compare">
             {{ formatPrice(product.comparePrice) }}
           </p>
           <strong>{{ formatPrice(product.price) }}</strong>
+          <span>{{ installmentText }}</span>
         </div>
 
-        <div class="detail-actions detail-actions--panel">
-          <div class="quantity-selector">
+        <div class="detail-meta detail-meta--commerce">
+          <span><strong>Categoria:</strong> {{ categoryLabel }}</span>
+          <span><strong>Objetivo:</strong> {{ product.goal }}</span>
+          <span><strong>Sabor:</strong> {{ product.flavor || 'No especificado' }}</span>
+          <span><strong>Stock:</strong> {{ product.stock }} unidades</span>
+        </div>
+
+        <div class="detail-actions detail-actions--panel detail-actions--commerce">
+          <div class="quantity-selector quantity-selector--commerce">
             <button class="ghost-button" type="button" @click="quantity = Math.max(1, quantity - 1)">
               -
             </button>
@@ -86,7 +105,9 @@ const addToCart = () => {
             </button>
           </div>
 
-          <button class="primary-button" type="button" @click="addToCart">Agregar al carrito</button>
+          <button class="primary-button detail-actions__submit" type="button" @click="addToCart">
+            Agregar al carrito
+          </button>
         </div>
       </div>
     </section>

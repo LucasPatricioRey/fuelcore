@@ -10,7 +10,7 @@ import { formatPrice } from '../utils/formatters'
 const router = useRouter()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
-const { items, subtotal } = storeToRefs(cartStore)
+const { items, subtotal, totalItems } = storeToRefs(cartStore)
 const isSubmitting = ref(false)
 const error = ref('')
 
@@ -65,17 +65,16 @@ const handleCheckout = async () => {
 </script>
 
 <template>
-  <main class="page-shell">
+  <main class="page-shell page-shell--checkout">
     <section class="cart-layout">
-      <div class="auth-card auth-card--feature">
+      <div class="checkout-card">
         <p class="eyebrow">Checkout</p>
-        <h1>Confirma tus datos y continua al pago seguro.</h1>
-        <p class="auth-copy">
-          Completa la direccion de entrega y te redirigimos a Mercado Pago para finalizar la
-          compra.
+        <h1>Confirma tus datos y continua con Mercado Pago.</h1>
+        <p class="checkout-card__copy">
+          Completa la direccion de entrega y te redirigimos al pago seguro para finalizar la compra.
         </p>
 
-        <form class="auth-form" @submit.prevent="handleCheckout">
+        <form class="checkout-form" @submit.prevent="handleCheckout">
           <label class="form-field">
             <span>Nombre completo</span>
             <input v-model="form.fullName" type="text" placeholder="Nombre y apellido" />
@@ -105,16 +104,20 @@ const handleCheckout = async () => {
 
           <p v-if="error" class="form-message form-message--error">{{ error }}</p>
 
-          <button class="primary-button auth-submit" type="submit" :disabled="!canSubmit || isSubmitting">
+          <button class="primary-button checkout-submit" type="submit" :disabled="!canSubmit || isSubmitting">
             {{ isSubmitting ? 'Redirigiendo a Mercado Pago...' : 'Continuar con Mercado Pago' }}
           </button>
         </form>
       </div>
 
-      <aside class="summary-card">
+      <aside class="summary-card summary-card--commerce">
         <p class="eyebrow">Orden</p>
         <h2 class="summary-card__title">Resumen de compra</h2>
-        <div v-for="item in items" :key="item.slug" class="summary-row">
+        <div class="summary-row">
+          <span>Productos</span>
+          <strong>{{ totalItems }}</strong>
+        </div>
+        <div v-for="item in items" :key="item.slug" class="summary-row summary-row--stacked">
           <span>{{ item.name }} x{{ item.quantity }}</span>
           <strong>{{ formatPrice(item.price * item.quantity) }}</strong>
         </div>

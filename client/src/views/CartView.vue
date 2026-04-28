@@ -11,14 +11,14 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
 </script>
 
 <template>
-  <main class="page-shell">
+  <main class="page-shell page-shell--cart">
     <section class="cart-layout">
       <div class="cart-list">
-        <div class="section-heading">
+        <div class="cart-heading">
           <p class="eyebrow">Carrito</p>
-          <h1>Todo listo para confirmar tu pedido.</h1>
-          <p class="hero-copy">
-            Revisa cantidades, ajusta tu seleccion y continua al pago cuando tengas la compra lista.
+          <h1>Revisa tu compra antes de pasar al checkout.</h1>
+          <p class="cart-heading__copy">
+            Ajusta cantidades, valida tus productos y continua al pago cuando tengas la orden lista.
           </p>
         </div>
 
@@ -26,22 +26,26 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
           Tu carrito esta vacio por ahora. Explora la tienda y suma productos para continuar.
         </p>
 
-        <article v-for="item in items" :key="item.slug" class="cart-item">
-          <img
-            :src="getProductImage(item)"
-            :alt="item.name"
-            @error="handleProductImageError($event, item)"
-          />
+        <article v-for="item in items" :key="item.slug" class="cart-item cart-item--commerce">
+          <div class="cart-item__media">
+            <img
+              :src="getProductImage(item)"
+              :alt="item.name"
+              @error="handleProductImageError($event, item)"
+            />
+          </div>
 
           <div class="cart-item__content">
-            <div>
-              <h3>{{ item.name }}</h3>
-              <p class="product-card__meta">{{ formatPrice(item.price) }} por unidad</p>
+            <div class="cart-item__top">
+              <div>
+                <h3>{{ item.name }}</h3>
+                <p class="product-card__meta">{{ formatPrice(item.price) }} por unidad</p>
+              </div>
               <p class="cart-item__line-total">{{ formatPrice(item.price * item.quantity) }}</p>
             </div>
 
             <div class="cart-item__actions">
-              <div class="quantity-selector">
+              <div class="quantity-selector quantity-selector--commerce">
                 <button
                   class="ghost-button"
                   type="button"
@@ -67,7 +71,7 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
         </article>
       </div>
 
-      <aside class="summary-card">
+      <aside class="summary-card summary-card--commerce">
         <p class="eyebrow">Resumen</p>
         <h2 class="summary-card__title">Tu orden</h2>
         <div class="summary-row">
@@ -79,8 +83,12 @@ const { items, subtotal, totalItems } = storeToRefs(cartStore)
           <strong>{{ formatPrice(subtotal) }}</strong>
         </div>
         <div class="summary-row">
-          <span>Entrega</span>
+          <span>Envio</span>
           <strong>Se calcula al confirmar</strong>
+        </div>
+        <div class="summary-row summary-row--total">
+          <span>Total estimado</span>
+          <strong>{{ formatPrice(subtotal) }}</strong>
         </div>
 
         <button
