@@ -85,8 +85,10 @@ const featuredProducts = computed(() => {
           <div>
             <p class="eyebrow">Categorias principales</p>
             <h2>Explora la tienda por linea de producto.</h2>
+            <router-link class="secondary-link home-section-heading__link" to="/tienda">
+              Ver todo el catalogo
+            </router-link>
           </div>
-          <router-link class="secondary-link" to="/tienda">Ver todo el catalogo</router-link>
         </div>
 
         <div class="home-categories__grid">

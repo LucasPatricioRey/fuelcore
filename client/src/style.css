@@ -869,26 +869,21 @@ img {
 
 .home-section-heading {
   margin: 0;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  min-height: 4.5rem;
 }
 
 .home-section-heading > div {
   display: grid;
   justify-items: center;
   text-align: center;
+  gap: 0.9rem;
 }
 
-.home-section-heading > .secondary-link,
-.home-section-heading > .primary-link {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.home-section-heading__link {
+  margin-top: 0.2rem;
 }
 
 .home-section-heading h2 {
@@ -2461,17 +2456,10 @@ img {
   .home-section-heading {
     display: flex;
     justify-content: flex-start;
-    min-height: 0;
   }
 
   .home-section-heading > div {
     width: 100%;
-  }
-
-  .home-section-heading > .secondary-link,
-  .home-section-heading > .primary-link {
-    position: static;
-    transform: none;
   }
 
   .home-section-heading h2 {
