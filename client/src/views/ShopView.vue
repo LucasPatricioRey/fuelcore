@@ -60,6 +60,28 @@ watch(
   },
 )
 
+const activeFilters = computed(() => {
+  const items = []
+
+  if (filters.search) {
+    items.push(`Busqueda: ${filters.search}`)
+  }
+
+  if (filters.category !== 'todas') {
+    items.push(`Categoria: ${filters.category}`)
+  }
+
+  if (filters.goal !== 'todos') {
+    items.push(`Objetivo: ${filters.goal}`)
+  }
+
+  if (filters.minPrice || filters.maxPrice) {
+    items.push(`Precio: ${filters.minPrice || '0'} - ${filters.maxPrice || 'max'}`)
+  }
+
+  return items
+})
+
 const resetFilters = () => {
   filters.search = ''
   filters.category = 'todas'
@@ -71,41 +93,55 @@ const resetFilters = () => {
 </script>
 
 <template>
-  <main class="page-shell page-shell--storefront">
-    <section class="catalog-header">
-      <div>
-        <p class="eyebrow">Inicio · Suplementos</p>
+  <main class="page-shell page-shell--catalog">
+    <section class="catalog-hero">
+      <div class="catalog-hero__copy">
+        <p class="eyebrow">Inicio / Suplementos</p>
         <h1>Suplementos</h1>
+        <p class="catalog-hero__text">
+          Catalogo completo de FuelCore con seleccion de proteinas, creatinas, pre entrenos y
+          combos listos para comprar con una lectura comercial mas clasica.
+        </p>
       </div>
 
-      <label class="catalog-header__sort">
-        <span>Ordenar</span>
-        <select v-model="filters.sort">
-          <option value="latest">Nuevos ingresos</option>
-          <option value="price_asc">Menor precio</option>
-          <option value="price_desc">Mayor precio</option>
-          <option value="name_asc">Nombre A-Z</option>
-        </select>
-      </label>
+      <div class="catalog-hero__meta">
+        <strong>{{ productsStore.items.length }}</strong>
+        <span>productos publicados</span>
+      </div>
     </section>
 
     <section class="catalog-layout">
       <aside class="catalog-sidebar">
+        <div class="catalog-filter-box catalog-filter-box--header">
+          <div>
+            <span class="catalog-filter-box__eyebrow">Filtrar</span>
+            <h2>Filtros</h2>
+          </div>
+          <button
+            v-if="activeFilterCount"
+            class="ghost-button catalog-filter-box__reset"
+            type="button"
+            @click="resetFilters"
+          >
+            Limpiar
+          </button>
+        </div>
+
         <div class="catalog-filter-box">
           <label class="form-field">
-            <span>Categorías</span>
-            <select v-model="filters.category">
-              <option v-for="category in categoryOptions" :key="category" :value="category">
-                {{ category }}
-              </option>
-            </select>
+            <span>Que estas buscando?</span>
+            <input v-model="filters.search" type="text" placeholder="Marca, producto o categoria" />
           </label>
         </div>
 
         <div class="catalog-filter-box">
           <label class="form-field">
-            <span>Marca / búsqueda</span>
-            <input v-model="filters.search" type="text" placeholder="Whey, creatina, pre..." />
+            <span>Categorias</span>
+            <select v-model="filters.category">
+              <option v-for="category in categoryOptions" :key="category" :value="category">
+                {{ category }}
+              </option>
+            </select>
           </label>
         </div>
 
@@ -127,22 +163,34 @@ const resetFilters = () => {
             <input v-model="filters.maxPrice" type="number" min="0" placeholder="Hasta" />
           </div>
         </div>
-
-        <button v-if="activeFilterCount" class="ghost-button catalog-filter-box__reset" type="button" @click="resetFilters">
-          Limpiar filtros
-        </button>
       </aside>
 
       <div class="catalog-results">
-        <div class="results-bar results-bar--catalog">
-          <strong>{{ productsStore.items.length }}</strong>
-          <span>productos encontrados</span>
+        <div class="catalog-results__toolbar">
+          <div class="results-bar results-bar--catalog">
+            <strong>{{ productsStore.items.length }}</strong>
+            <span>productos encontrados</span>
+          </div>
+
+          <label class="catalog-header__sort">
+            <span>Ordenar</span>
+            <select v-model="filters.sort">
+              <option value="latest">Mas nuevos</option>
+              <option value="price_asc">Precio: menor a mayor</option>
+              <option value="price_desc">Precio: mayor a menor</option>
+              <option value="name_asc">Nombre A-Z</option>
+            </select>
+          </label>
+        </div>
+
+        <div v-if="activeFilters.length" class="catalog-active-filters">
+          <span v-for="filter in activeFilters" :key="filter">{{ filter }}</span>
         </div>
 
         <p v-if="productsStore.isLoading" class="state-message">Cargando productos...</p>
         <p v-else-if="productsStore.error" class="state-message">{{ productsStore.error }}</p>
         <p v-else-if="!productsStore.items.length" class="state-message">
-          No encontramos productos con esos filtros. Prueba otra combinacion.
+          No encontramos productos con esos filtros. Proba otra combinacion.
         </p>
 
         <section v-else class="product-grid product-grid--catalog">

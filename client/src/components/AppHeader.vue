@@ -17,19 +17,24 @@ const utilityNotes = [
   'Mercado Pago protegido',
 ]
 
-const featuredLinks = [
+const navigationLinks = [
+  { label: 'Inicio', to: '/' },
+  { label: 'Suplementos', to: '/tienda' },
   { label: 'Proteinas', to: '/tienda' },
   { label: 'Creatina', to: '/tienda' },
   { label: 'Pre entreno', to: '/tienda' },
-  { label: 'Ofertas', to: '/tienda' },
+  { label: 'Combos', to: '/tienda' },
 ]
 
 const accountLabel = computed(() => (isAuthenticated.value ? 'Mi cuenta' : 'Ingresar'))
 const accountRoute = computed(() => (isAuthenticated.value ? '/mi-cuenta' : '/login'))
+const accountSubtitle = computed(() =>
+  isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
+)
 const isCompact = ref(false)
 
 const handleScroll = () => {
-  isCompact.value = window.scrollY > 48
+  isCompact.value = window.scrollY > 36
 }
 
 onMounted(() => {
@@ -41,6 +46,10 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
+const goToShop = () => {
+  router.push('/tienda')
+}
+
 const handleLogout = () => {
   authStore.logout()
   router.push('/')
@@ -49,74 +58,79 @@ const handleLogout = () => {
 
 <template>
   <header class="site-header site-header--commerce" :class="{ 'site-header--compact': isCompact }">
-    <div class="promo-bar" v-show="!isCompact">
-      <div class="promo-bar__inner">
-        <strong>Envio gratis en AMBA desde $65.000</strong>
-        <span>Precios online y promociones por tiempo limitado</span>
-      </div>
-    </div>
-
-    <div class="utility-strip" v-show="!isCompact">
-      <div class="utility-strip__inner">
-        <div class="utility-strip__notes">
-          <span v-for="note in utilityNotes" :key="note">{{ note }}</span>
-        </div>
-
-        <div class="utility-strip__account">
-          <router-link :to="accountRoute">{{ accountLabel }}</router-link>
-          <router-link v-if="!isAuthenticated" to="/registro">O podés registrarte</router-link>
-          <span v-else class="session-pill">{{ userFullName }}</span>
-          <router-link v-if="isAdmin" to="/admin">Admin</router-link>
+    <div class="site-header__stack">
+      <div class="promo-bar">
+        <div class="promo-bar__inner">
+          <strong>ENVIO GRATIS A CABA Y GBA DESDE $65.000 / RESTO $85.000</strong>
+          <span>Promociones online y stock actualizado</span>
         </div>
       </div>
-    </div>
 
-    <div class="header-main">
-      <div class="header-main__inner">
-        <router-link class="brand-mark brand-mark--commerce" to="/">
-          <span class="brand-mark__word">FuelCore</span>
-        </router-link>
+      <div class="utility-strip">
+        <div class="utility-strip__inner">
+          <div class="utility-strip__notes">
+            <span v-for="note in utilityNotes" :key="note">{{ note }}</span>
+          </div>
 
-        <div class="header-search">
-          <router-link class="header-search__field" to="/tienda">
-            ¿Qué estás buscando?
-          </router-link>
-          <router-link class="header-search__action" to="/tienda">⌕</router-link>
+          <div class="utility-strip__account">
+            <router-link :to="accountRoute">{{ accountLabel }}</router-link>
+            <router-link v-if="!isAuthenticated" to="/registro">Registrate</router-link>
+            <span v-else class="session-pill">{{ userFullName }}</span>
+            <router-link v-if="isAdmin" to="/admin">Admin</router-link>
+          </div>
         </div>
+      </div>
 
-        <div class="header-main__actions">
-          <router-link class="header-account" :to="accountRoute">
-            <span class="header-account__icon">◯</span>
-            <span class="header-account__copy">
-              <strong>{{ isAuthenticated ? 'Mi cuenta' : '¡Hola! Iniciá sesión' }}</strong>
-              <small>{{ isAuthenticated ? userFullName : 'O podés registrarte' }}</small>
-            </span>
+      <div class="header-main">
+        <div class="header-main__inner">
+          <router-link class="brand-mark brand-mark--commerce" to="/">
+            <span class="brand-mark__top">FuelCore</span>
+            <span class="brand-mark__bottom">PERFORMANCE STORE</span>
           </router-link>
 
-          <router-link class="header-icon-link" to="/carrito">
-            <span class="header-icon-link__label">🛒</span>
-            <strong>{{ totalItems }}</strong>
-          </router-link>
-
-          <router-link v-if="isAdmin" class="header-icon-link" to="/admin">Admin</router-link>
-
-          <button v-if="isAuthenticated && !isCompact" class="ghost-button header-logout" type="button" @click="handleLogout">
-            Salir
+          <button class="header-search" type="button" @click="goToShop">
+            <span class="header-search__field">Que estas buscando?</span>
+            <span class="header-search__action">Buscar</span>
           </button>
+
+          <div class="header-main__actions">
+            <router-link class="header-account" :to="accountRoute">
+              <span class="header-account__icon">MI</span>
+              <span class="header-account__copy">
+                <strong>{{ accountLabel }}</strong>
+                <small>{{ accountSubtitle }}</small>
+              </span>
+            </router-link>
+
+            <router-link class="header-cart" to="/carrito">
+              <span class="header-cart__icon">Cart</span>
+              <span class="header-cart__copy">
+                <strong>Carrito</strong>
+                <small>{{ totalItems }} producto{{ totalItems === 1 ? '' : 's' }}</small>
+              </span>
+              <span class="header-cart__count">{{ totalItems }}</span>
+            </router-link>
+
+            <button
+              v-if="isAuthenticated"
+              class="ghost-button header-logout"
+              type="button"
+              @click="handleLogout"
+            >
+              Salir
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <nav class="catalog-nav">
-      <div class="catalog-nav__inner">
-        <router-link class="catalog-nav__categories" to="/tienda">☰ Categorías</router-link>
-        <router-link to="/">Inicio</router-link>
-        <router-link to="/tienda">Marcas</router-link>
-        <router-link v-for="link in featuredLinks" :key="link.label" :to="link.to">
-          {{ link.label }}
-        </router-link>
-        <router-link to="/tienda">Accesorios</router-link>
-      </div>
-    </nav>
+      <nav class="catalog-nav">
+        <div class="catalog-nav__inner">
+          <router-link class="catalog-nav__categories" to="/tienda">Categorias</router-link>
+          <router-link v-for="link in navigationLinks" :key="link.label" :to="link.to">
+            {{ link.label }}
+          </router-link>
+        </div>
+      </nav>
+    </div>
   </header>
 </template>
