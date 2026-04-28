@@ -81,10 +81,12 @@ const featuredProducts = computed(() => {
       </section>
 
       <section class="home-categories">
-        <div class="section-heading home-section-heading">
-          <div>
+        <div class="section-heading home-section-heading home-section-heading--categories">
+          <div class="home-section-heading__content">
             <p class="eyebrow">Categorias principales</p>
-            <h2>Explora la tienda por linea de producto.</h2>
+            <h2 class="home-section-heading__title home-section-heading__title--categories">
+              Explora la tienda por linea de producto.
+            </h2>
             <router-link class="secondary-link home-section-heading__link" to="/tienda">
               Ver todo el catalogo
             </router-link>
@@ -102,10 +104,12 @@ const featuredProducts = computed(() => {
       </section>
 
       <section class="home-featured">
-        <div class="section-heading home-section-heading">
-          <div>
+        <div class="section-heading home-section-heading home-section-heading--featured">
+          <div class="home-section-heading__content">
             <p class="eyebrow">Productos destacados</p>
-            <h2>Selecciones fuertes para fuerza, energia y recuperacion.</h2>
+            <h2 class="home-section-heading__title home-section-heading__title--featured">
+              Selecciones fuertes para fuerza, energia y recuperacion.
+            </h2>
           </div>
         </div>
 
