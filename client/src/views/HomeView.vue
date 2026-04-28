@@ -138,15 +138,6 @@ const featuredProducts = computed(() => {
       </section>
 
       <section class="home-video">
-        <div class="home-video__copy">
-          <p class="eyebrow">Campana FuelCore</p>
-          <h2>Rendimiento visual para cerrar la experiencia de marca.</h2>
-          <p>
-            Un bloque final mas de campaña, arriba del footer, para que la home termine con una
-            sensacion mas fuerte de gimnasio, esfuerzo y suplementacion real.
-          </p>
-        </div>
-
         <div class="home-video__frame">
           <video
             class="home-video__media"
@@ -155,8 +146,8 @@ const featuredProducts = computed(() => {
             loop
             playsinline
             preload="metadata"
-            controls
             poster="/products/pre-workout-350g.png"
+            aria-hidden="true"
           >
             <source src="/media/fuelcore-training.mp4" type="video/mp4" />
           </video>
