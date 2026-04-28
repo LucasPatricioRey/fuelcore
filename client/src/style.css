@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --page-width: 1280px;
+  --storefront-width: 1820px;
   --surface: #17171a;
   --surface-soft: #121214;
   --surface-strong: #1f1f24;
@@ -112,7 +113,7 @@ img {
 .utility-strip__inner,
 .header-main__inner,
 .catalog-nav__inner {
-  width: min(calc(100% - 2rem), var(--page-width));
+  width: min(calc(100% - 2.5rem), var(--storefront-width));
   margin: 0 auto;
 }
 
@@ -164,11 +165,11 @@ img {
 }
 
 .header-main__inner {
-  padding: 0.7rem 0;
+  padding: 0.85rem 0;
   display: grid;
-  grid-template-columns: minmax(240px, 320px) minmax(540px, 1fr) auto;
+  grid-template-columns: minmax(255px, 340px) minmax(760px, 1fr) auto;
   align-items: center;
-  gap: 1rem;
+  gap: 1.35rem;
   transition: padding 240ms ease, gap 240ms ease;
 }
 
@@ -176,7 +177,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-self: start;
-  max-width: 280px;
+  max-width: 312px;
 }
 
 .brand-mark--commerce {
@@ -185,7 +186,7 @@ img {
 
 .brand-mark img {
   width: 100%;
-  max-width: 264px;
+  max-width: 294px;
   height: auto;
   object-fit: contain;
 }
@@ -193,13 +194,13 @@ img {
 .header-search {
   display: grid;
   grid-template-columns: 1fr auto;
-  width: min(100%, 760px);
-  justify-self: center;
+  width: 100%;
+  justify-self: stretch;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 0.2rem;
+  border-radius: 0.15rem;
   overflow: hidden;
-  background: #0f0f10;
+  background: #111113;
   transition: border-color 180ms ease, transform 180ms ease;
 }
 
@@ -209,24 +210,24 @@ img {
 
 .header-search__field {
   width: 100%;
-  padding: 0.92rem 1rem;
+  padding: 1rem 1.15rem;
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, 0.64);
+  color: rgba(255, 255, 255, 0.92);
   text-align: left;
-  font-size: 0.98rem;
+  font-size: 1rem;
   outline: none;
 }
 
 .header-search__field::placeholder {
-  color: rgba(255, 255, 255, 0.48);
+  color: rgba(255, 255, 255, 0.52);
 }
 
 .header-search__action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
+  width: 64px;
   background: transparent;
   border: 0;
   color: #ffffff;
@@ -243,21 +244,21 @@ img {
   display: flex;
   align-items: stretch;
   justify-self: end;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-left: auto;
 }
 
 .header-account,
 .header-cart {
   position: relative;
-  min-height: 56px;
+  min-height: 54px;
   display: inline-flex;
   align-items: center;
   gap: 0.62rem;
-  padding: 0.72rem 0.9rem;
+  padding: 0.7rem 0.88rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 0.2rem;
-  background: #0f0f10;
+  border-radius: 0.15rem;
+  background: #101112;
   color: #ffffff;
   transition: border-color 180ms ease, background 180ms ease;
 }
@@ -302,13 +303,13 @@ img {
 
 .header-account__copy strong,
 .header-cart__copy strong {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
 }
 
 .header-account__copy small,
 .header-cart__copy small {
   color: rgba(255, 255, 255, 0.82);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
 }
 
 .header-cart__count {
@@ -330,31 +331,33 @@ img {
 
 .header-logout {
   min-width: auto;
-  border-radius: 0.2rem;
+  border-radius: 0.15rem;
   padding-inline: 1rem;
-  min-height: 56px;
+  min-height: 54px;
 }
 
 .catalog-nav {
   background: #1780ff;
   color: #ffffff;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .catalog-nav__inner {
-  padding: 0.9rem 0;
+  padding: 0.95rem 0;
+  justify-content: flex-start;
   overflow-x: auto;
-  gap: 1.5rem;
+  gap: 2.6rem;
   transition: padding 240ms ease;
 }
 
 .catalog-nav__inner a {
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.96);
-  font-size: 0.93rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.04rem;
+  letter-spacing: 0.06rem;
 }
 
 .catalog-nav__categories {
@@ -383,11 +386,11 @@ img {
 }
 
 .site-header--compact .header-main__inner {
-  padding: 0.55rem 0;
+  padding: 0.62rem 0;
 }
 
 .site-header--compact .brand-mark img {
-  max-width: 228px;
+  max-width: 250px;
 }
 
 .hero {
@@ -666,11 +669,11 @@ img {
 }
 
 .home-content-shell {
-  width: min(calc(100% - 2rem), var(--page-width));
+  width: min(calc(100% - 2.5rem), 1500px);
   margin: 0 auto;
-  padding-top: 1.15rem;
+  padding-top: 1.25rem;
   display: grid;
-  gap: 1.15rem;
+  gap: 1.25rem;
 }
 
 .home-banner__frame {
@@ -2390,7 +2393,7 @@ img {
   .catalog-nav__inner,
   .page-shell,
   .home-content-shell {
-    width: min(calc(100% - 1.2rem), var(--page-width));
+    width: min(calc(100% - 1.2rem), var(--storefront-width));
   }
 
   .utility-strip__inner,

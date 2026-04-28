@@ -120,7 +120,7 @@ const handleLogout = () => {
             v-model="searchTerm"
             class="header-search__field"
             type="text"
-            placeholder="¿Qué estás buscando?"
+            placeholder="Que estas buscando?"
           />
           <button class="header-search__action" type="submit" aria-label="Buscar">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -141,7 +141,7 @@ const handleLogout = () => {
               </svg>
             </span>
             <span class="header-account__copy">
-              <strong>{{ isAuthenticated ? 'Mi cuenta' : '¡Hola! Iniciá sesión' }}</strong>
+              <strong>{{ isAuthenticated ? 'Mi cuenta' : 'Hola! Inicia sesion' }}</strong>
               <small>{{ accountSubtitle }}</small>
             </span>
           </router-link>
