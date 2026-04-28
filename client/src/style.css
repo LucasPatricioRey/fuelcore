@@ -1907,6 +1907,9 @@ img {
   width: min(100%, 720px);
   display: grid;
   gap: 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050506;
+  padding: 1.5rem;
 }
 
 .checkout-card {
@@ -1918,10 +1921,7 @@ img {
 }
 
 .auth-card--feature {
-  background:
-    radial-gradient(circle at top left, rgba(255, 124, 49, 0.14), transparent 26%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03)),
-    rgba(12, 17, 24, 0.9);
+  background: linear-gradient(180deg, rgba(23, 128, 255, 0.08), transparent 32%), #050506;
 }
 
 .auth-card__copy {
@@ -1929,8 +1929,14 @@ img {
   gap: 0.2rem;
 }
 
+.auth-card h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+}
+
 .auth-copy {
   margin: 0;
+  color: #c3c3ca;
 }
 
 .auth-form {
@@ -1946,6 +1952,13 @@ img {
 .auth-submit,
 .auth-link {
   width: 100%;
+}
+
+.auth-submit,
+.auth-link {
+  min-height: 3rem;
+  border-radius: 0.2rem;
+  text-transform: uppercase;
 }
 
 .checkout-submit {
@@ -2007,7 +2020,8 @@ img {
 }
 
 .auth-switch a {
-  color: var(--accent-soft);
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .account-hero {
@@ -2015,12 +2029,33 @@ img {
   margin-bottom: 1.1rem;
 }
 
+.account-hero--commerce,
 .account-card {
   width: min(100%, 920px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050506;
+  padding: 1.45rem;
+}
+
+.account-hero--commerce h1 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.account-hero__copy {
+  margin: 1rem 0 0;
+  color: #c3c3ca;
 }
 
 .account-card--wide {
   margin-top: 1rem;
+}
+
+.account-card--commerce {
+  gap: 0;
 }
 
 .account-row {
@@ -2038,10 +2073,14 @@ img {
 }
 
 .order-card {
-  border: 1px solid var(--border);
-  border-radius: 1.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: #111214;
+}
+
+.order-card--commerce {
+  display: grid;
+  gap: 0.35rem;
 }
 
 .admin-metrics {

@@ -19,16 +19,16 @@ onMounted(() => {
 
 <template>
   <main class="page-shell account-page">
-    <section class="account-hero">
+    <section class="account-hero account-hero--commerce">
       <p class="eyebrow">Mi cuenta</p>
       <h1>Tu perfil y tus compras, reunidos en un solo lugar.</h1>
-      <p class="hero-copy">
+      <p class="account-hero__copy">
         Consulta tus datos, sigue el estado de tus pedidos y revisa el historial de compra cuando
         lo necesites.
       </p>
     </section>
 
-    <section v-if="user" class="account-card">
+    <section v-if="user" class="account-card account-card--commerce">
       <div class="account-row">
         <span>Nombre completo</span>
         <strong>{{ userFullName }}</strong>
@@ -47,7 +47,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <section class="account-card account-card--wide">
+    <section class="account-card account-card--wide account-card--commerce">
       <p class="eyebrow">Mis ordenes</p>
       <h2 class="summary-card__title">Historial de compras</h2>
       <p v-if="isLoading" class="state-message">Cargando ordenes...</p>
@@ -57,7 +57,7 @@ onMounted(() => {
       </p>
 
       <div v-else class="orders-list">
-        <article v-for="order in orders" :key="order._id" class="order-card">
+        <article v-for="order in orders" :key="order._id" class="order-card order-card--commerce">
           <div class="summary-row">
             <span>Orden</span>
             <strong>#{{ order._id.slice(-6) }}</strong>
