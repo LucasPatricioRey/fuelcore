@@ -6,17 +6,19 @@ export const useProductsStore = defineStore('products', {
     items: [],
     isLoading: false,
     error: '',
+    lastFilters: {},
   }),
   getters: {
     featuredProducts: (state) => state.items.filter((product) => product.featured),
   },
   actions: {
-    async fetchProducts() {
+    async fetchProducts(filters = {}) {
       this.isLoading = true
       this.error = ''
+      this.lastFilters = filters
 
       try {
-        this.items = await getProducts()
+        this.items = await getProducts(filters)
       } catch (error) {
         this.error = error.message ?? 'No se pudieron cargar los productos.'
       } finally {
