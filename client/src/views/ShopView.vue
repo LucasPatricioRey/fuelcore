@@ -1,9 +1,11 @@
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
 import { useProductsStore } from '../stores/products'
 
 const productsStore = useProductsStore()
+const route = useRoute()
 
 const categoryOptions = [
   { value: 'todas', label: 'Todas las categorias' },
@@ -64,7 +66,13 @@ const loadProducts = () =>
     maxPrice: filters.maxPrice,
   })
 
-onMounted(loadProducts)
+onMounted(() => {
+  if (typeof route.query.q === 'string') {
+    filters.search = route.query.q
+  }
+
+  loadProducts()
+})
 
 watch(
   () => [filters.category, filters.goal, filters.sort],
@@ -82,6 +90,17 @@ watch(
     searchTimeout = setTimeout(() => {
       loadProducts()
     }, 250)
+  },
+)
+
+watch(
+  () => route.query.q,
+  (value) => {
+    const nextSearch = typeof value === 'string' ? value : ''
+
+    if (filters.search !== nextSearch) {
+      filters.search = nextSearch
+    }
   },
 )
 

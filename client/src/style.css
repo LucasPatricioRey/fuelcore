@@ -166,7 +166,7 @@ img {
 .header-main__inner {
   padding: 0.7rem 0;
   display: grid;
-  grid-template-columns: minmax(220px, 320px) minmax(420px, 1fr) auto;
+  grid-template-columns: minmax(240px, 320px) minmax(540px, 1fr) auto;
   align-items: center;
   gap: 1rem;
   transition: padding 240ms ease, gap 240ms ease;
@@ -175,7 +175,8 @@ img {
 .brand-mark {
   display: inline-flex;
   align-items: center;
-  max-width: 270px;
+  justify-self: start;
+  max-width: 280px;
 }
 
 .brand-mark--commerce {
@@ -184,7 +185,7 @@ img {
 
 .brand-mark img {
   width: 100%;
-  max-width: 248px;
+  max-width: 264px;
   height: auto;
   object-fit: contain;
 }
@@ -192,13 +193,13 @@ img {
 .header-search {
   display: grid;
   grid-template-columns: 1fr auto;
-  width: 100%;
+  width: min(100%, 760px);
+  justify-self: center;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 0.2rem;
   overflow: hidden;
   background: #0f0f10;
-  cursor: pointer;
   transition: border-color 180ms ease, transform 180ms ease;
 }
 
@@ -206,25 +207,36 @@ img {
   border-color: rgba(23, 128, 255, 0.58);
 }
 
-.header-search__field,
-.header-search__action {
-  padding: 0.92rem 1rem;
-}
-
 .header-search__field {
+  width: 100%;
+  padding: 0.92rem 1rem;
+  border: 0;
+  background: transparent;
   color: rgba(255, 255, 255, 0.64);
   text-align: left;
   font-size: 0.98rem;
+  outline: none;
+}
+
+.header-search__field::placeholder {
+  color: rgba(255, 255, 255, 0.48);
 }
 
 .header-search__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
   background: transparent;
+  border: 0;
   color: #ffffff;
-  font-weight: 700;
-  font-size: 1.5rem;
-  min-width: 62px;
-  text-transform: none;
-  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.header-search__action svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
 }
 
 .header-main__actions {
@@ -232,6 +244,7 @@ img {
   align-items: stretch;
   justify-self: end;
   gap: 0.6rem;
+  margin-left: auto;
 }
 
 .header-account,
@@ -265,9 +278,13 @@ img {
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
-  font-size: 0.58rem;
-  font-weight: 700;
-  text-transform: uppercase;
+}
+
+.header-account__icon svg,
+.header-cart__icon svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
 }
 
 .header-account__copy,
@@ -370,7 +387,7 @@ img {
 }
 
 .site-header--compact .brand-mark img {
-  max-width: 214px;
+  max-width: 228px;
 }
 
 .hero {
@@ -2357,6 +2374,10 @@ img {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .header-search {
+    width: 100%;
   }
 
   .header-account,

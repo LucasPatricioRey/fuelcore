@@ -1,12 +1,13 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
 import logoFuelCore from '../assets/logo-fuelcore.png'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 const { isAdmin, isAuthenticated, userFullName } = storeToRefs(authStore)
@@ -32,6 +33,7 @@ const accountRoute = computed(() => (isAuthenticated.value ? '/mi-cuenta' : '/lo
 const accountSubtitle = computed(() =>
   isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
 )
+const searchTerm = ref('')
 
 const isCompact = ref(false)
 const compactEnterOffset = 220
@@ -59,8 +61,20 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-const goToShop = () => {
-  router.push('/tienda')
+watch(
+  () => route.query.q,
+  (value) => {
+    searchTerm.value = typeof value === 'string' ? value : ''
+  },
+  { immediate: true },
+)
+
+const submitSearch = () => {
+  const trimmed = searchTerm.value.trim()
+  router.push({
+    path: '/tienda',
+    query: trimmed ? { q: trimmed } : {},
+  })
 }
 
 const handleLogout = () => {
@@ -101,22 +115,45 @@ const handleLogout = () => {
           <img :src="logoFuelCore" alt="FuelCore" />
         </router-link>
 
-        <button class="header-search" type="button" @click="goToShop">
-          <span class="header-search__field">Que estas buscando?</span>
-          <span class="header-search__action">⌕</span>
-        </button>
+        <form class="header-search" @submit.prevent="submitSearch">
+          <input
+            v-model="searchTerm"
+            class="header-search__field"
+            type="text"
+            placeholder="¿Qué estás buscando?"
+          />
+          <button class="header-search__action" type="submit" aria-label="Buscar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M10.5 4a6.5 6.5 0 1 0 4.03 11.6l4.44 4.44 1.41-1.41-4.44-4.44A6.5 6.5 0 0 0 10.5 4Zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"
+              />
+            </svg>
+          </button>
+        </form>
 
         <div class="header-main__actions">
           <router-link class="header-account" :to="accountRoute">
-            <span class="header-account__icon">MI</span>
+            <span class="header-account__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 12a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2c-4.3 0-7.5 2.2-8.5 5.5h2.2c.9-2.1 3.2-3.5 6.3-3.5s5.4 1.4 6.3 3.5h2.2c-1-3.3-4.2-5.5-8.5-5.5Z"
+                />
+              </svg>
+            </span>
             <span class="header-account__copy">
-              <strong>{{ accountLabel }}</strong>
+              <strong>{{ isAuthenticated ? 'Mi cuenta' : '¡Hola! Iniciá sesión' }}</strong>
               <small>{{ accountSubtitle }}</small>
             </span>
           </router-link>
 
           <router-link class="header-cart" to="/carrito">
-            <span class="header-cart__icon">Cart</span>
+            <span class="header-cart__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7 5H4v2h1.2l1.8 8.1A2 2 0 0 0 9 17h8v-2H9l-.2-.9h8.6a2 2 0 0 0 1.94-1.5L21 8H8.3L8 6.7A2 2 0 0 0 6.05 5H7Zm2.5 14a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"
+                />
+              </svg>
+            </span>
             <span class="header-cart__copy">
               <strong>Carrito</strong>
               <small>{{ totalItems }} producto{{ totalItems === 1 ? '' : 's' }}</small>
