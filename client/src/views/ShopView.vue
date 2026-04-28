@@ -9,18 +9,18 @@ const route = useRoute()
 
 const categoryOptions = [
   { value: 'todas', label: 'Todas las categorias' },
-  { value: 'proteinas', label: 'Proteinas' },
-  { value: 'creatina', label: 'Pre intra & creatina' },
-  { value: 'pre-entrenos', label: 'Performance' },
-  { value: 'packs', label: 'Vitaminas & suplementos' },
+  { value: 'control-peso', label: 'Control de peso' },
+  { value: 'aminoacidos', label: 'Aminoacidos' },
+  { value: 'pre-entrenos', label: 'Pre entreno' },
+  { value: 'snacks-proteicos', label: 'Barras proteicas' },
 ]
 
 const goalOptions = [
   { value: 'todos', label: 'Todos los objetivos' },
+  { value: 'definicion', label: 'Definicion' },
   { value: 'recuperacion', label: 'Recuperacion' },
-  { value: 'fuerza', label: 'Fuerza' },
   { value: 'energia', label: 'Energia' },
-  { value: 'rendimiento', label: 'Control de peso' },
+  { value: 'nutricion', label: 'Nutricion diaria' },
 ]
 
 const filters = reactive({
@@ -155,8 +155,8 @@ const resetFilters = () => {
         <p class="eyebrow">Inicio / Suplementos</p>
         <h1>Suplementos</h1>
         <p class="catalog-hero__text">
-          Catalogo completo de FuelCore con seleccion de proteinas, creatinas, pre entrenos y
-          combos listos para comprar con una lectura comercial mas clasica.
+          Catalogo completo con seleccion de control de peso, aminoacidos, pre entrenos y snacks
+          proteicos listos para comprar con una lectura comercial mas clasica.
         </p>
       </div>
 

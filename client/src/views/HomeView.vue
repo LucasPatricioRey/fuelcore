@@ -8,28 +8,28 @@ const productsStore = useProductsStore()
 
 const categoryCards = [
   {
-    name: 'Proteinas',
-    copy: 'Whey, isolate y blends pensados para recuperacion y ganancia muscular.',
-    count: '32 productos',
+    name: 'Control de peso',
+    copy: 'Termogenicos y quemadores pensados para definicion, energia y apoyo metabolico.',
+    count: '1 producto',
   },
   {
-    name: 'Creatina',
-    copy: 'Opciones para fuerza, potencia y mejor rendimiento en cada bloque de trabajo.',
-    count: '14 productos',
+    name: 'Aminoacidos',
+    copy: 'BCAA para recuperacion muscular, hidratacion y soporte durante sesiones intensas.',
+    count: '1 producto',
   },
   {
     name: 'Pre entreno',
-    copy: 'Mas energia, foco y sensacion de arranque para entrenar con intensidad.',
-    count: '18 productos',
+    copy: 'Mas foco, energia y empuje con formulas fuertes para entrenamientos exigentes.',
+    count: '1 producto',
   },
   {
-    name: 'Combos',
-    copy: 'Arma tu stack con packs listos para objetivos concretos y mejor precio.',
-    count: '8 combos',
+    name: 'Barras proteicas',
+    copy: 'Snacks practicos, bajos en azucares y con buen aporte proteico para cada dia.',
+    count: '1 producto',
   },
 ]
 
-const brands = ['ENA', 'Star Nutrition', 'Xtrenght', 'Optimum Nutrition', 'Universal', 'MyProtein']
+const brands = ['Iron Fuel', 'Fat Burner', 'BCAA 2:1:1', 'Pre Workout', 'Protein Bar', 'Performance']
 
 const trustPillars = [
   'Pago seguro con Mercado Pago',

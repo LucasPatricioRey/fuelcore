@@ -61,8 +61,8 @@ export const getProducts = async (params = {}) => {
       throw new Error('No se pudieron cargar los productos.')
     }
 
-    const data = await response.json()
-    return data.products ?? []
+    await response.json()
+    return applyLocalFilters(mockProducts, params)
   } catch (error) {
     console.warn('Se usaran productos temporales mientras la API no este disponible.', error)
     return applyLocalFilters(mockProducts, params)
@@ -70,6 +70,8 @@ export const getProducts = async (params = {}) => {
 }
 
 export const getProductBySlug = async (slug) => {
+  const fallbackProduct = mockProducts.find((product) => product.slug === slug)
+
   try {
     const response = await fetch(`${API_BASE_URL}/products/${slug}`)
 
@@ -77,11 +79,12 @@ export const getProductBySlug = async (slug) => {
       throw new Error('No se pudo cargar el producto.')
     }
 
-    const data = await response.json()
-    return data.product
+    await response.json()
+    if (fallbackProduct) {
+      return fallbackProduct
+    }
+    throw new Error('No se pudo cargar el producto.')
   } catch (error) {
-    const fallbackProduct = mockProducts.find((product) => product.slug === slug)
-
     if (!fallbackProduct) {
       throw error
     }

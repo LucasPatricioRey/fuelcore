@@ -1,23 +1,23 @@
 const categoryThemes = {
-  proteinas: {
-    eyebrow: 'Recuperacion',
-    accent: '#ff8a3d',
-    shadow: '#ffb06b',
+  'control-peso': {
+    eyebrow: 'Definicion',
+    accent: '#8b3dff',
+    shadow: '#c6a1ff',
   },
-  creatina: {
-    eyebrow: 'Potencia',
-    accent: '#4ecdc4',
-    shadow: '#9ef3ea',
+  aminoacidos: {
+    eyebrow: 'Recuperacion',
+    accent: '#2b82ff',
+    shadow: '#8dc0ff',
   },
   'pre-entrenos': {
     eyebrow: 'Impulso',
-    accent: '#ffd166',
-    shadow: '#ffe7a5',
+    accent: '#ff4d4d',
+    shadow: '#ff9f9f',
   },
-  packs: {
-    eyebrow: 'Combo',
-    accent: '#f26ca7',
-    shadow: '#ffb7d6',
+  'snacks-proteicos': {
+    eyebrow: 'Snack',
+    accent: '#d97732',
+    shadow: '#f0bd92',
   },
 }
 
