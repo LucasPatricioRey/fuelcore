@@ -32,8 +32,8 @@ const accountSubtitle = computed(() =>
   isAuthenticated.value ? userFullName.value : 'O crea tu cuenta',
 )
 const isCompact = ref(false)
-const compactEnterOffset = 72
-const compactExitOffset = 20
+const compactEnterOffset = 148
+const compactExitOffset = 110
 
 const handleScroll = () => {
   const currentScroll = window.scrollY
@@ -68,7 +68,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <header class="site-header site-header--commerce">
+  <header class="site-header site-header--commerce" :class="{ 'site-header--compact': isCompact }">
     <div class="site-header__top">
       <div class="promo-bar">
         <div class="promo-bar__inner">
@@ -93,7 +93,7 @@ const handleLogout = () => {
       </div>
     </div>
 
-    <div class="site-header__sticky" :class="{ 'site-header--compact': isCompact }">
+    <div class="site-header__sticky">
       <div class="header-main">
         <div class="header-main__inner">
           <router-link class="brand-mark brand-mark--commerce" to="/">
