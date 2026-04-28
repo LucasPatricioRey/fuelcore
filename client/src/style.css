@@ -869,14 +869,15 @@ img {
 
 .home-section-heading {
   margin: 0;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  position: relative;
+  display: flex;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
+  min-height: 4.5rem;
 }
 
 .home-section-heading > div {
-  grid-column: 2;
   display: grid;
   justify-items: center;
   text-align: center;
@@ -884,8 +885,10 @@ img {
 
 .home-section-heading > .secondary-link,
 .home-section-heading > .primary-link {
-  grid-column: 3;
-  justify-self: end;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .home-section-heading h2 {
@@ -2457,10 +2460,18 @@ img {
 
   .home-section-heading {
     display: flex;
+    justify-content: flex-start;
+    min-height: 0;
   }
 
   .home-section-heading > div {
     width: 100%;
+  }
+
+  .home-section-heading > .secondary-link,
+  .home-section-heading > .primary-link {
+    position: static;
+    transform: none;
   }
 
   .home-section-heading h2 {
