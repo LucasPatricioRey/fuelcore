@@ -1,4 +1,14 @@
 const categoryThemes = {
+  proteinas: {
+    eyebrow: 'Proteina',
+    accent: '#d5a35b',
+    shadow: '#f0d0a1',
+  },
+  creatina: {
+    eyebrow: 'Fuerza',
+    accent: '#84d93d',
+    shadow: '#c8f39a',
+  },
   'control-peso': {
     eyebrow: 'Definicion',
     accent: '#8b3dff',

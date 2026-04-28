@@ -9,6 +9,8 @@ const route = useRoute()
 
 const categoryOptions = [
   { value: 'todas', label: 'Todas las categorias' },
+  { value: 'proteinas', label: 'Proteinas' },
+  { value: 'creatina', label: 'Creatina' },
   { value: 'control-peso', label: 'Control de peso' },
   { value: 'aminoacidos', label: 'Aminoacidos' },
   { value: 'pre-entrenos', label: 'Pre entreno' },
@@ -17,6 +19,8 @@ const categoryOptions = [
 
 const goalOptions = [
   { value: 'todos', label: 'Todos los objetivos' },
+  { value: 'masa-muscular', label: 'Masa muscular' },
+  { value: 'fuerza', label: 'Fuerza' },
   { value: 'definicion', label: 'Definicion' },
   { value: 'recuperacion', label: 'Recuperacion' },
   { value: 'energia', label: 'Energia' },
@@ -155,8 +159,8 @@ const resetFilters = () => {
         <p class="eyebrow">Inicio / Suplementos</p>
         <h1>Suplementos</h1>
         <p class="catalog-hero__text">
-          Catalogo completo con seleccion de control de peso, aminoacidos, pre entrenos y snacks
-          proteicos listos para comprar con una lectura comercial mas clasica.
+          Catalogo completo con seleccion de proteinas, creatina, control de peso, aminoacidos,
+          pre entrenos y snacks proteicos listos para comprar con una lectura comercial mas clasica.
         </p>
       </div>
 

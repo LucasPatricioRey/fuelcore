@@ -13,7 +13,7 @@
         <router-link to="/tienda">Proteinas</router-link>
         <router-link to="/tienda">Creatina</router-link>
         <router-link to="/tienda">Pre entreno</router-link>
-        <router-link to="/tienda">Combos</router-link>
+        <router-link to="/tienda">Control de peso</router-link>
       </div>
 
       <div class="site-footer__column">

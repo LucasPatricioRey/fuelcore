@@ -8,13 +8,13 @@ const productsStore = useProductsStore()
 
 const categoryCards = [
   {
-    name: 'Control de peso',
-    copy: 'Termogenicos y quemadores pensados para definicion, energia y apoyo metabolico.',
+    name: 'Proteinas',
+    copy: 'Whey para recuperacion, masa muscular y constancia en la suplementacion diaria.',
     count: '1 producto',
   },
   {
-    name: 'Aminoacidos',
-    copy: 'BCAA para recuperacion muscular, hidratacion y soporte durante sesiones intensas.',
+    name: 'Creatina',
+    copy: 'Creatina micronizada para fuerza, rendimiento y progreso sostenido en cada rutina.',
     count: '1 producto',
   },
   {
@@ -23,13 +23,13 @@ const categoryCards = [
     count: '1 producto',
   },
   {
-    name: 'Barras proteicas',
-    copy: 'Snacks practicos, bajos en azucares y con buen aporte proteico para cada dia.',
+    name: 'Control de peso',
+    copy: 'Quemadores y soporte metabolico para etapas de definicion con lectura comercial real.',
     count: '1 producto',
   },
 ]
 
-const brands = ['Iron Fuel', 'Fat Burner', 'BCAA 2:1:1', 'Pre Workout', 'Protein Bar', 'Performance']
+const brands = ['Iron Fuel', 'Whey Protein', 'Creatine', 'BCAA 2:1:1', 'Pre Workout', 'Protein Bar']
 
 const trustPillars = [
   'Pago seguro con Mercado Pago',
@@ -135,6 +135,32 @@ const featuredProducts = computed(() => {
           <h3>{{ pillar }}</h3>
           <p>Una experiencia de compra que mantiene cuenta, carrito, checkout y operacion real.</p>
         </article>
+      </section>
+
+      <section class="home-video">
+        <div class="home-video__copy">
+          <p class="eyebrow">Campana FuelCore</p>
+          <h2>Rendimiento visual para cerrar la experiencia de marca.</h2>
+          <p>
+            Un bloque final mas de campaña, arriba del footer, para que la home termine con una
+            sensacion mas fuerte de gimnasio, esfuerzo y suplementacion real.
+          </p>
+        </div>
+
+        <div class="home-video__frame">
+          <video
+            class="home-video__media"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            controls
+            poster="/products/pre-workout-350g.png"
+          >
+            <source src="/media/fuelcore-training.mp4" type="video/mp4" />
+          </video>
+        </div>
       </section>
     </div>
   </main>
