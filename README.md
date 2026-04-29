@@ -129,6 +129,10 @@ cd server
 npm run seed
 ```
 
+## Licencia
+
+MIT
+
 Credenciales admin de semilla:
 
 - email: `admin@fuelcore.com`
